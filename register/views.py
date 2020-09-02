@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import RegisterForm
+from django.contrib.auth.models import Group
 
 # Create your views here.
 def register(response):
@@ -7,7 +8,9 @@ def register(response):
     if response.method == "POST":
         form = RegisterForm(response.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            group = Group.objects.get(name='user')
+            user.groups.add(group)
             return render(response, 'login/', {})
     else:
         form=RegisterForm()
