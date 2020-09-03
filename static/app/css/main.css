@@ -1,0 +1,47 @@
+.navbar-nav {
+    flex-direction: row;
+    }
+    .main {
+
+    }
+    .nav-link {
+    padding-right: .5rem !important;
+    padding-left: .5rem !important;
+    }
+    
+    /* Fixes dropdown menus placed on the right side */
+    .nav-item {
+    left: auto !important;
+    right: 0px;
+    }
+
+    .alert {
+        width: 300px;
+    }
+    
+.base-section {
+    background: #fdfdfd;
+    min-height: 100vh;
+    padding: 10vh 0 0;
+}
+.base-title h2 {
+position: relative;
+margin-bottom: 45px;
+display: inline-block;
+font-weight: 600;
+line-height: 1;
+}
+.base-title h2::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    width: 60px;
+    height: 2px;
+    background: #00cc00;
+    bottom: -25px;
+    margin-left: -30px;
+}
+.base-title p {
+padding: 0 190px;
+margin-bottom: 10px;
+}
