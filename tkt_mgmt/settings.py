@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'app.apps.AppConfig',
     'register.apps.RegisterConfig',
+    'adm.apps.AdmConfig',
+    'engineer.apps.EngineerConfig',
+    'usr.apps.UsrConfig',
 ]
 
 MIDDLEWARE = [
@@ -133,4 +136,6 @@ STATICFILES_DIRS = [
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/usr/'
+
+LOGOUT_REDIRECT_URL = '/login/'
