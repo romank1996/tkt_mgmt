@@ -1,0 +1,47 @@
+{% extends "app/dash_base.html" %}
+
+{% block title %}Tickets{% endblock %}
+
+{% block sidnav %}
+<li>
+    <a href="/dashboard/tickets">
+      <i class="fa fa-ticket" aria-hidden="true"></i> Tickets
+    </a>
+  </li>
+{% endblock %}
+
+{% block content%}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>Tickets list</h3>
+          </div>
+          <div class="col col-lg-3">
+            <a type="button" href="/dashboard/create_new_ticket" class="btn btn-success btn-block" style="color: white;"><i class="fa fa-plus" aria-hidden="true"></i>  Create New Ticket</a>
+
+          </div>
+    
+    </div>
+
+    <hr />
+    <table>
+        <thead>
+            <tr>
+                <th>issue</th>
+                <th>desc</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in tickets %}
+            <tr>
+                <td>{{ item.issue_type }} </td>
+                <td>{{ item.description }} </td>
+                <td></td>
+            </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
