@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'app.apps.AppConfig',
     'register.apps.RegisterConfig',
     'accounts',
+    'bootstrap3',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,4 @@ STATICFILES_DIRS = [
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
