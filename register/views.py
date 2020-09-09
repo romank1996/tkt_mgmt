@@ -11,7 +11,7 @@ def register(response):
             user = form.save()
             group = Group.objects.get(name='user')
             user.groups.add(group)
-            return render(response, 'login/', {})
+            return render(response, '/login', {})
     else:
         form=RegisterForm()
     args['form'] = form

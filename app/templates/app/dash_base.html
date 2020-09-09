@@ -2,7 +2,10 @@
 <!doctype html>
 <html>
     <head>
+        <style type="text/css">
+        </style>
         <link rel="stylesheet" href="{% static "app/css/main.css" %}" >
+        <link rel="stylesheet" href="{% static "app/css/dash_base.css" %}" >
 
         {% block style %}{% endblock %}
         <link rel="icon" type="image/png" href="{% static "app/images/favicon.ico" %}"/>
@@ -43,13 +46,52 @@
         </nav>
 
 
-        <div id="content" name="content" class="main container">
-            <div class="row justify-content-center">
-                {% block content %}
-                {% endblock %}
+        <div class="sidebar-container">
+            <div class="sidebar-logo">
+                Welcome  {{ uname }}
             </div>
-            
-        </div>
+            <ul class="sidebar-navigation">
+              <li class="header">Site Navigation</li>
+              <li>
+                <a href="/dashboard/">
+                  <i class="fa fa-home" aria-hidden="true"></i> Dashboard
+                </a>
+              </li>
+              {% block sidnav %}{% endblock %}
+              <li>
+                <a href="#">
+                  <i class="fa fa-info-circle" aria-hidden="true"></i> Information
+                </a>
+              </li>
+              <li class="header">User Navigation</li>
+              <li>
+                <a href="#">
+                  <i class="fa fa-cog" aria-hidden="true"></i> Profile
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'logout' %}">
+                  <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="content-container">
+          
+            <div class="container-fluid">
+          
+              <!-- Main component for a primary marketing message or call to action -->
+              <div class="jumbotron">
+                <div id="content" name="content" class="main container">
+                    <div class="row justify-content-center">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+              </div>
+          
+            </div>
+          </div>
 
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
