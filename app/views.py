@@ -10,3 +10,6 @@ def faq(response):
 
 def home(response):
     return render(response, "app/home.html", {})
+
+def dashboard(response):
+    return render(response, "app/dashboard.html")

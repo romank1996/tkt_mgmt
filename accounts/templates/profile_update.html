@@ -1,0 +1,34 @@
+{% extends "app/base.html" %}
+
+{% block title %} <title>Profile Form</title> {% endblock %}
+{% block content %}
+{% load bootstrap3 %}
+
+<div class ="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="box">
+                <div class="box-heading">
+                    <h2>
+                        {% if not form.instance.pk %}
+                            Fill the details
+                        {% else %}
+                            Edit the details
+                        {% endif %}
+                    </h2>
+                </div>
+                <form action=" " class="needs-validation" method="POST" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+
+                    <div class="form-row">
+                        <input class="btn btn-primary" value="Save" type="submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+ </div>
+
+ {% endblock %}

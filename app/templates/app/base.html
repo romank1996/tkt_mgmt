@@ -86,12 +86,28 @@
                     <li class="nav-item">
                         <a href="/faq" class="nav-link m-2 menu-item">FAQs</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="/login" class="nav-link m-2 menu-item">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/register" class="nav-link m-2 menu-item">Register</a>
-                    </li>
+
+                    {% if user.is_authenticated %}
+                    
+                        <li class="nav-item dropdown active">
+                            <a class="nav-link m-2 menu-item dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ user.username }}
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{% url 'accounts:updateprofile' pk=user.profile.id %}">Update Profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a>
+                            </div>
+                        </li>
+                    
+                    {% else %}
+                        <li class="nav-item">
+                            <a href="{% url 'accounts:login' %}" class="nav-link m-2 menu-item">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'accounts:signup' %}" class="nav-link m-2 menu-item">Register</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
