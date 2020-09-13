@@ -15,4 +15,4 @@ class SignUpForm(UserCreationForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = '__all__'
+        exclude = ['user']
