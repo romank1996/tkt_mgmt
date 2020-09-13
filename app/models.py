@@ -6,6 +6,7 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+from django.contrib.auth.models import User
 
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
@@ -127,34 +128,28 @@ class Status(models.Model):
         db_table = 'status'
 
 
-class TicketAssignHistory(models.Model):
-    id = models.IntegerField(primary_key=True)
-    ticket_id = models.IntegerField(blank=True, null=True)
-    assigned_to = models.IntegerField(blank=True, null=True)
-    assigned_time = models.DateTimeField(blank=True, null=True)
-    assigned_by = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'ticket_assign_history'
-
-
-class TicketStatus(models.Model):
+class Tickets(models.Model):
     ticket_id = models.IntegerField(primary_key=True)
-    status_id = models.IntegerField()
-    change_time = models.DateTimeField(blank=True, null=True)
-    comment = models.CharField(max_length=255, blank=True, null=True)
+    issue_type = models.CharField(max_length=25, blank=False, null=False)
+    description = models.CharField(max_length=255, blank=False, null=False)
+    finish_date = models.DateField(blank=False, null=False)
+    priority = models.CharField(max_length=10, blank=False, null=False)
+    user = models.ForeignKey(User, models.DO_NOTHING, blank=False, null=False, related_name='created_by')
+    created_at = models.DateTimeField(blank=False, null=False)
+    assigned_to = models.ForeignKey(User, db_column='assigned_to', on_delete=models.DO_NOTHING, blank=True, null=True, related_name="assigned")
+    assigned_at = models.DateTimeField(blank=True, null=True)
+    status = models.ForeignKey(Status, models.DO_NOTHING, null=True, blank=True)
+    is_closed = models.BooleanField(null=True,default=False,blank=True)
 
     class Meta:
         managed = False
-        db_table = 'ticket_status'
-        unique_together = (('ticket_id', 'status_id'),)
+        db_table = 'tickets'
 
 
 class TicketStatusHistory(models.Model):
     id = models.IntegerField(primary_key=True)
-    ticket_id = models.IntegerField(blank=True, null=True)
-    status_id = models.IntegerField(blank=True, null=True)
+    ticket_id = models.ForeignKey(Tickets, models.DO_NOTHING, blank=True, null=True)
+    status_id = models.ForeignKey(Status, models.DO_NOTHING, blank=True, null=True)
     change_time = models.DateTimeField(blank=True, null=True)
     modified_by = models.IntegerField(blank=True, null=True)
     comment = models.CharField(max_length=255, blank=True, null=True)
@@ -164,20 +159,16 @@ class TicketStatusHistory(models.Model):
         db_table = 'ticket_status_history'
 
 
-class Tickets(models.Model):
-    ticket_id = models.IntegerField(primary_key=True)
-    issue_type = models.CharField(max_length=25, blank=True, null=True)
-    description = models.CharField(max_length=255, blank=True, null=True)
-    finish_date = models.DateField(blank=True, null=True)
-    priority = models.CharField(max_length=10, blank=True, null=True)
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING, blank=True, null=True, related_name='created_by')
-    created_at = models.DateTimeField(blank=True, null=True)
-    assigned_to = models.ForeignKey(AuthUser, models.DO_NOTHING, blank=True, null=True, related_name='assigned_to')
-    assigned_at = models.DateTimeField(blank=True, null=True)
+class TicketAssignHistory(models.Model):
+    id = models.IntegerField(primary_key=True)
+    ticket_id = models.ForeignKey(Tickets, models.DO_NOTHING, blank=True, null=True)
+    assigned_to = models.ForeignKey(User, db_column='assigned_to', on_delete=models.DO_NOTHING, blank=True, null=True, related_name="assigned_by")
+    assigned_time = models.DateTimeField(blank=True, null=True)
+    assigned_by = models.ForeignKey(User, db_column='assigned_by', on_delete=models.DO_NOTHING, blank=True, null=True, related_name="admin")
 
     class Meta:
         managed = False
-        db_table = 'tickets'
+        db_table = 'ticket_assign_history'
 
 class Faqs(models.Model):
     id = models.IntegerField(primary_key=True)

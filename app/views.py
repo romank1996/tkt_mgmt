@@ -14,8 +14,8 @@ def home(response):
 def signedin(response):
     group = response.user.groups.filter(user=response.user)[0]
     if group.name=="user":
-        return render(response, 'usr/dashboard.html', {"uname": response.user.username})
+        return render(response, 'usr/dashboard.html', {})
     elif group.name=="engineer":
-        return render(response, 'engineer/dashboard.html',{"uname": response.user.username})
+        return render(response, 'engineer/dashboard.html',{})
     elif group.name=="admin":
-        return render(response, 'adm/dashboard.html', {"uname": response.user.username})
+        return render(response, 'adm/dashboard.html', {})

@@ -16,7 +16,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from register import views as v
-from adm import views as adm_v
 from engineer import views as eng_v
 
 urlpatterns = [
@@ -24,9 +23,10 @@ urlpatterns = [
     path('', include('app.urls')),
     path('app/', include('app.urls')),
     path('register/', v.register, name='register'),
-    path('adm/', adm_v.index, name='adm'),
     path('engineer/', eng_v.index, name='engineer'),
     path('', include('usr.urls')),
     path('dashboard/', include('usr.urls')),
+    path('', include('adm.urls')),
+    path('dashboard/', include('adm.urls')),
     path('', include('django.contrib.auth.urls')),
 ]

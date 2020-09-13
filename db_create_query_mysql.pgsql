@@ -1,5 +1,5 @@
 create table tickets(
-    ticket_id integer primary KEY,
+    ticket_id integer primary key AUTO_INCREMENT,
 issue_type varchar(25),
 description varchar(255),
 finish_date date,
@@ -14,14 +14,14 @@ REFERENCES auth_user(id)
 );
 
 create table ticket_assign_history(
-    id integer PRIMARY KEY,
+    id integer PRIMARY KEY AUTO_INCREMENT,
     ticket_id integer,
     assigned_to integer,
     assigned_time timestamp,
     assigned_by integer
 );
 create table status(
-    status_id integer PRIMARY KEY,
+    status_id integer PRIMARY KEY AUTO_INCREMENT,
     Status varchar(15)
 );
 create table ticket_status(
@@ -32,7 +32,7 @@ create table ticket_status(
     primary KEY (ticket_id, status_id)
 );
 create table ticket_status_history(
-    id integer PRIMARY KEY,
+    id integer PRIMARY KEY AUTO_INCREMENT,
     ticket_id integer,
     status_id integer,
     change_time timestamp,
@@ -40,7 +40,7 @@ create table ticket_status_history(
     comment varchar(255)
 );
 create table faqs(
-    id integer PRIMARY KEY,
+    id integer PRIMARY KEY AUTO_INCREMENT,
     question varchar(255),
 answer varchar(255),
     created_at timestamp,

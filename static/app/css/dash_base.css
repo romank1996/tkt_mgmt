@@ -5,7 +5,7 @@
     left: 0;
     overflow-x: hidden;
     overflow-y: auto;
-    background: #1a1a1a;
+    background: gray;
     color: #fff;
   }
   
@@ -52,7 +52,7 @@
   }
   
   .sidebar-navigation li::before {
-    background-color: #2574A9;
+    background-color: lightskyblue;
     position: absolute;
     content: '';
     height: 100%;
@@ -71,7 +71,7 @@
   .sidebar-navigation .header {
     font-size: 12px;
     text-transform: uppercase;
-    background-color: #151515;
+    background-color: lightskyblue;
     padding: 10px 15px 10px 30px;
   }
   
@@ -82,3 +82,4 @@
   .content-container {
     padding-left: 220px;
   }
+  

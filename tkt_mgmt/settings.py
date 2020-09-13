@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap_datepicker_plus',
     'crispy_forms',
     'app.apps.AppConfig',
     'register.apps.RegisterConfig',
@@ -139,3 +140,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = '/dashboard/'
 
 LOGOUT_REDIRECT_URL = '/login/'
+
+#Bootstrap block
+BOOTSTRAP4 = {
+    'include_jquery': True,
+}
+

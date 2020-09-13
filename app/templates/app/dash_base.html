@@ -1,4 +1,5 @@
 {% load static %}
+
 <!doctype html>
 <html>
     <head>
@@ -7,7 +8,6 @@
         <link rel="stylesheet" href="{% static "app/css/main.css" %}" >
         <link rel="stylesheet" href="{% static "app/css/dash_base.css" %}" >
 
-        {% block style %}{% endblock %}
         <link rel="icon" type="image/png" href="{% static "app/images/favicon.ico" %}"/>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -15,12 +15,13 @@
          <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        {% block style %}{% endblock %}
 
         <title>{% block title %}Arif Systems{% endblock %}</title>
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: lightsteelblue;">
             <div class="d-flex flex-grow-1">
                 <span class="w-100 d-lg-none d-block"><!-- hidden spacer to center brand on mobile --></span>
                 <a class="navbar-brand d-none d-lg-inline-block" href="/dashboard/">
@@ -35,7 +36,7 @@
             <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
                 <ul class="navbar-nav ml-auto flex-nowrap">
                     <li class="nav-item ">
-                      <a href="/profile/" class="nav-link"> <i> Welcome,  {{ uname }}  </i> </a>
+                      <a href="/profile/" class="nav-link"> <i> Welcome,  {{ user.username }}  </i> </a>
                     </li>
                     <li class="nav-item">
                         
@@ -46,7 +47,7 @@
         </nav>
 
 
-        <div class="sidebar-container">
+        <div class="sidebar-container" style="margin-top: 65px;">
             <div class="sidebar-logo">
                 Welcome  {{ uname }}
             </div>
@@ -82,7 +83,7 @@
             <div class="container-fluid">
           
               <!-- Main component for a primary marketing message or call to action -->
-              <div class="jumbotron">
+              <div class="jumbotron" style="margin-top: 65px;">
                 <div id="content" name="content" class="main container">
                     <div class="row justify-content-center">
                         {% block content %}
@@ -97,5 +98,7 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        {% block js %}
+        {% endblock %}
     </body>
 </html>
