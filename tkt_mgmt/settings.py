@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'adm.apps.AdmConfig',
     'engineer.apps.EngineerConfig',
     'usr.apps.UsrConfig',
+    'bootstrap4',
 ]
 
 MIDDLEWARE = [
