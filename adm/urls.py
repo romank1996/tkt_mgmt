@@ -7,4 +7,5 @@ urlpatterns = [
     path('dashboard/', views.index, name='dashboard'),
     path('dashboard/tickets/', views.tickets, name='dashboard/admin_tickets'),
     path('dashboard/tickets/create_new_ticket/', views.create_new_ticket, name='create_new_ticket'),
+    path('dashboard/tickets/assign_tickets/<int:pk>', views.assign_tickets, name='assign_tickets'),
 ]

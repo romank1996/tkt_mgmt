@@ -129,14 +129,20 @@ class Status(models.Model):
 
 
 class Tickets(models.Model):
+    priority_choices = (
+        ('urgent', 'Urgent'),
+        ('high', 'High'),
+        ('medium', 'Medium'),
+        ('low', 'Low'),
+    )
     ticket_id = models.IntegerField(primary_key=True)
     issue_type = models.CharField(max_length=25, blank=False, null=False)
-    description = models.CharField(max_length=255, blank=False, null=False)
+    description = models.TextField(max_length=255, blank=False, null=False)
     finish_date = models.DateField(blank=False, null=False)
-    priority = models.CharField(max_length=10, blank=False, null=False)
+    priority = models.CharField(max_length=10, choices=priority_choices,default='medium')
     user = models.ForeignKey(User, models.DO_NOTHING, blank=False, null=False, related_name='created_by')
     created_at = models.DateTimeField(blank=False, null=False)
-    assigned_to = models.ForeignKey(User, db_column='assigned_to', on_delete=models.DO_NOTHING, blank=True, null=True, related_name="assigned")
+    assigned_to = models.ForeignKey(User, limit_choices_to={'groups__name': "engineer"}, db_column='assigned_to', on_delete=models.DO_NOTHING, blank=True, null=True, related_name="assigned")
     assigned_at = models.DateTimeField(blank=True, null=True)
     status = models.ForeignKey(Status, models.DO_NOTHING, null=True, blank=True)
     is_closed = models.BooleanField(null=True,default=False,blank=True)
