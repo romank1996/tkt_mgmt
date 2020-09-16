@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'engineer.apps.EngineerConfig',
     'usr.apps.UsrConfig',
     'bootstrap4',
+    'accounts',
+    'bootstrap3',
 ]
 
 MIDDLEWARE = [
@@ -139,6 +141,7 @@ STATICFILES_DIRS = [
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = '/dashboard/'
+
 
 LOGOUT_REDIRECT_URL = '/login/'
 

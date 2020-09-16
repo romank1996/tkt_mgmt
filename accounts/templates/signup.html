@@ -1,0 +1,22 @@
+{% extends "app/base.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+    <div class="container top-margin">
+    <div class="delete-box">
+        <h2>You are already logged in. Logout to Sign Up</h2>
+    </div>
+    </div>
+    {% else %}
+    <div class="container">
+        <h1>Sign Up</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <input type="submit" class="btn btn-primary" value="Sign Up">
+        </form>
+    </div>
+    {% endif %}
+{% endblock %}

@@ -27,6 +27,11 @@ urlpatterns = [
     path('', include('adm.urls')),
     path('dashboard/', include('adm.urls')),
     path('', include('django.contrib.auth.urls')),
+
     path('dashboard/', include('engineer.urls')),
     path('', include('engineer.urls')),
+
+    path('accounts/', include('accounts.urls', namespace='accounts')),
+    path('accounts/', include('django.contrib.auth.urls')),
+
 ]

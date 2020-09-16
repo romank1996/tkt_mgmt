@@ -19,3 +19,6 @@ def signedin(response):
         return render(response, 'engineer/dashboard.html',{})
     elif group.name=="admin":
         return render(response, 'adm/dashboard.html', {})
+
+def dashboard(response):
+    return render(response, "app/dashboard.html")
