@@ -1,41 +1,4 @@
-Skip to content
-Search or jump to…
 
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@romank1996 
-Learn Git and GitHub without any code!
-Using the Hello World guide, you’ll start a branch, write comments, and open a pull request.
-
-
-romank1996
-/
-tkt_mgmt
-Private
-2
-00
-Code
-Issues
-2
-Pull requests
-1
-Actions
-Projects
-Security
-Insights
-Settings
-tkt_mgmt/.gitignore
-@jenish-acharya
-jenish-acharya .gitignore added
-Latest commit 107a5db 5 days ago
- History
- 2 contributors
-@jenish-acharya@romank1996
-493 lines (371 sloc)  8.52 KB
-  
 # Created by https://www.toptal.com/developers/gitignore/api/zsh,emacs,linux,django,python,windows,visualstudiocode,archlinuxpackages,pycharm+all,vim,sublimetext
 # Edit at https://www.toptal.com/developers/gitignore?templates=zsh,emacs,linux,django,python,windows,visualstudiocode,archlinuxpackages,pycharm+all,vim,sublimetext
 
@@ -529,15 +492,3 @@ zsdoc/data
 !/tests/_output/.gitkeep
 
 # End of https://www.toptal.com/developers/gitignore/api/zsh,emacs,linux,django,python,windows,visualstudiocode,archlinuxpackages,pycharm+all,vim,sublimetext
-© 2020 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
