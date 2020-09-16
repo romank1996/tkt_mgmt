@@ -5,11 +5,24 @@ from bootstrap_datepicker_plus import DatePickerInput, TimePickerInput, DateTime
 class TicketForm(forms.ModelForm):
     class Meta:
         model = Tickets
-        fields = ["issue_type", "description", "finish_date", "priority","assigned_to"]
+        fields = ["ticket_id","issue_type","created_at", "description", "finish_date","user", "priority","assigned_to"]
         widgets = {
             'finish_date': DatePickerInput(),
         }
         labels={
-            "finish_date":"Required Due By",
+            "finish_date":"Due By",
+            "assigned_to":"Assign To",
+        }
+
+
+class TicketAssignForm(forms.ModelForm):
+    class Meta:
+        model = Tickets
+        fields = ["finish_date", "priority","assigned_to"]
+        widgets = {
+            'finish_date': DatePickerInput(),
+        }
+        labels={
+            "finish_date":"Due By",
             "assigned_to":"Assign To",
         }

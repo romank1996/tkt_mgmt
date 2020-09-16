@@ -82,4 +82,20 @@
   .content-container {
     padding-left: 220px;
   }
-  
+  .msb .navbar-nav .panel {
+    border: 0 none;
+    box-shadow: none;
+    margin: 0;
+    background: inherit;
+  }
+  .msb .navbar-nav li {
+    display: block;
+    width: 100%;
+  }
+  .msb .navbar-nav li a {
+    padding: 15px;
+    color: #5f5f5f;
+  }
+  .msb .navbar-nav li a .glyphicon, .msb .navbar-nav li a .fa {
+    margin-right: 8px;
+  }

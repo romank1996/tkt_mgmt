@@ -144,7 +144,7 @@ class Tickets(models.Model):
     created_at = models.DateTimeField(blank=False, null=False)
     assigned_to = models.ForeignKey(User, limit_choices_to={'groups__name': "engineer"}, db_column='assigned_to', on_delete=models.DO_NOTHING, blank=True, null=True, related_name="assigned")
     assigned_at = models.DateTimeField(blank=True, null=True)
-    status = models.ForeignKey(Status, models.DO_NOTHING, null=True, blank=True)
+    status = models.ForeignKey(Status, db_column='status_id', on_delete=models.DO_NOTHING, null=True, blank=True)
     is_closed = models.BooleanField(null=True,default=False,blank=True)
 
     class Meta:
@@ -152,29 +152,29 @@ class Tickets(models.Model):
         db_table = 'tickets'
 
 
+
+class TicketAssignHistory(models.Model):
+    ticket_id = models.IntegerField(blank=True, null=True)
+    assigned_to = models.ForeignKey(User, db_column='assigned_to',on_delete=models.DO_NOTHING,blank=True, null=True)
+    assigned_time = models.DateTimeField(blank=True, null=True)
+    assigned_by = models.ForeignKey(User, db_column='assigned_by',on_delete=models.DO_NOTHING,blank=True, null=True,related_name='assigned_by')
+
+    class Meta:
+        managed = False
+        db_table = 'ticket_assign_history'
+
+
 class TicketStatusHistory(models.Model):
-    id = models.IntegerField(primary_key=True)
-    ticket_id = models.ForeignKey(Tickets, models.DO_NOTHING, blank=True, null=True)
-    status_id = models.ForeignKey(Status, models.DO_NOTHING, blank=True, null=True)
+    ticket_id = models.IntegerField(blank=True, null=True)
+    status_id = models.IntegerField(blank=True, null=True)
     change_time = models.DateTimeField(blank=True, null=True)
-    modified_by = models.IntegerField(blank=True, null=True)
+    modified_by = models.ForeignKey(User, db_column='modified_by',on_delete=models.DO_NOTHING, blank=True, null=True)
     comment = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'ticket_status_history'
 
-
-class TicketAssignHistory(models.Model):
-    id = models.IntegerField(primary_key=True)
-    ticket_id = models.ForeignKey(Tickets, models.DO_NOTHING, blank=True, null=True)
-    assigned_to = models.ForeignKey(User, db_column='assigned_to', on_delete=models.DO_NOTHING, blank=True, null=True, related_name="assigned_by")
-    assigned_time = models.DateTimeField(blank=True, null=True)
-    assigned_by = models.ForeignKey(User, db_column='assigned_by', on_delete=models.DO_NOTHING, blank=True, null=True, related_name="admin")
-
-    class Meta:
-        managed = False
-        db_table = 'ticket_assign_history'
 
 class Faqs(models.Model):
     id = models.IntegerField(primary_key=True)

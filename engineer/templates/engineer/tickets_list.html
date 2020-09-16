@@ -1,0 +1,202 @@
+{% extends "adm/admin_sidenav.html" %}
+
+{% block title %}Tickets{% endblock %}
+
+{% block style %}
+<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+{% endblock %}
+
+
+{% block content%}
+<div class="container">
+    <div class="row">
+        <div class="col col-md-8">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <a class="nav-link active" data-toggle="tab" href="#new">New Tickets</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#working">Working On</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#complete">Complete</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#unassigned">Unassigned Tickets</a>
+                </li>
+                </ul>
+        </div>
+        <div class="col">
+            <h3>Tickets list</h3>
+          </div>
+          <!-- <div class="col col-lg-3">
+            <a type="button" href="/dashboard/tickets/create_new_ticket" class="btn btn-success btn-block" style="color: white;"><i class="fa fa-plus" aria-hidden="true"></i>  Create New Ticket</a>
+
+          </div> -->
+    
+    </div>
+<!-- Modal -->
+    <hr />
+    
+    <!-- Nav tabs -->
+    
+    
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane container active" id="new">
+            <table  id="example" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Ticket No.</th>
+                        <th>Issue</th>
+                        <th>Issued By</th>
+                        <th>Due Date</th>
+                        <th>Created At</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in new_tickets %}
+                    <tr>
+                        <td>#{{ item.ticket_id }} </td>
+                        <td>{{ item.issue_type }} </td>
+                        <td>{{ item.user.username }} </td>
+                        <td>{{ item.finish_date }} </td>
+                        <td>{{ item.created_at }} </td>
+                        <td>
+                            {{ item.status.status }}
+                        </td>
+                        <td>{{ item.priority }} </td>
+                        <td>
+                            <!-- <a type="button"  href="{% url 'assign_tickets' item.ticket_id %}" class="btn btn-success btn-block"> <i class="fa fa-user-plus" aria-hidden="true"></i>  Assign</a> -->
+                        </td>
+                    </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane container fade" id="working">
+            <table  id="working_tbl" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Ticket No.</th>
+                        <th>Issue</th>
+                        <th>Issued By</th>
+                        <th>Due Date</th>
+                        <th>Created At</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in working_on %}
+                    <tr>
+                        <td>#{{ item.ticket_id }} </td>
+                        <td>{{ item.issue_type }} </td>
+                        <td>{{ item.user.username }} </td>
+                        <td>{{ item.finish_date }} </td>
+                        <td>{{ item.created_at }} </td>
+                        <td>
+                            {{ item.status.status }}
+                        </td>
+                        <td>{{ item.priority }} </td>
+                        <td>
+                            <!-- <a type="button"  href="{% url 'assign_tickets' item.ticket_id %}" class="btn btn-success btn-block"> <i class="fa fa-user-plus" aria-hidden="true"></i>  Assign</a> -->
+                        </td>
+                    </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane container fade" id="complete">
+            <table  id="complete_tbl" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Ticket No.</th>
+                        <th>Issue</th>
+                        <th>Issued By</th>
+                        <th>Due Date</th>
+                        <th>Created At</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in complete %}
+                    <tr>
+                        <td>#{{ item.ticket_id }} </td>
+                        <td>{{ item.issue_type }} </td>
+                        <td>{{ item.user.username }} </td>
+                        <td>{{ item.finish_date }} </td>
+                        <td>{{ item.created_at }} </td>
+                        <td>
+                            {{ item.status.status }}
+                        </td>
+                        <td>{{ item.priority }} </td>
+                        <td>
+                            <!-- <a type="button"  href="{% url 'assign_tickets' item.ticket_id %}" class="btn btn-success btn-block"> <i class="fa fa-user-plus" aria-hidden="true"></i>  Assign</a> -->
+                        </td>
+                    </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane container fade" id="unassigned">
+            <table  id="unassigned_tbl" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Ticket No.</th>
+                        <th>Issue</th>
+                        <th>Issued By</th>
+                        <th>Due Date</th>
+                        <th>Created At</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in unassigned %}
+                    <tr>
+                        <td>#{{ item.ticket_id }} </td>
+                        <td>{{ item.issue_type }} </td>
+                        <td>{{ item.user.username }} </td>
+                        <td>{{ item.finish_date }} </td>
+                        <td>{{ item.created_at }} </td>
+                        <td>
+                            {{ item.status.status }}
+                        </td>
+                        <td>{{ item.priority }} </td>
+                        <td>
+                            <!-- <a type="button"  href="{% url 'assign_tickets' item.ticket_id %}" class="btn btn-success btn-block"> <i class="fa fa-user-plus" aria-hidden="true"></i>  Assign</a> -->
+                        </td>
+                    </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable();
+        $('#working_tbl').DataTable();
+        $('#complete_tbl').DataTable();
+        $('#unassigned_tbl').DataTable();
+    } );
+
+</script>
+{% endblock %}

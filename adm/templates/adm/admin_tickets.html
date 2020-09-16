@@ -45,7 +45,7 @@
                 <td>{{ item.created_at }} </td>
                 <td>
                     {% if item.status %}
-                        {{ item.status }}
+                        {{ item.status.status }}
                     {% else %}
                         Pending
                     {% endif %}

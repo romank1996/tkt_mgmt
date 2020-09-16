@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import TicketForm
-from .models import Tickets
+from app.models import Tickets
 from django.http import HttpResponseRedirect
 # from django.urls import reverse 
 

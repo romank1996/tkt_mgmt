@@ -27,9 +27,11 @@
                 <th>Ticket No.</th>
                 <th>Issue</th>
                 <th>Due Date</th>
+                <th>Priority</th>
                 <th>Created At</th>
                 <th>Status</th>
                 <th>Assigned To</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -38,9 +40,19 @@
                 <td>#{{ item.ticket_id }} </td>
                 <td>{{ item.issue_type }} </td>
                 <td>{{ item.finish_date }} </td>
+                <td>{{ item.priority }} </td>
                 <td>{{ item.created_at }} </td>
-                <td></td>
-                <td>{{ item.assigned_to }} </td>
+                <td> {% if item.status %}
+                    {{ item.status.status }}
+                {% else %}
+                    Pending
+                {% endif %}</td>
+                <td>{{ item.assigned_to.username }} </td>
+                <td>
+                    <a type="button"  href="" class="btn btn-success"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
+                    <a type="button"  href="" class="btn btn-danger"> <i class="fa fa-ban" aria-hidden="true"></i> </a>
+                </td>
+
             </tr>
                 {% endfor %}
         </tbody>

@@ -14,7 +14,7 @@ class Tickets(models.Model):
     created_at = models.DateTimeField(blank=False, null=False)
     assigned_to = models.ForeignKey(User, db_column='assigned_to', on_delete=models.DO_NOTHING, blank=True, null=True, related_name='assigned_to')
     assigned_at = models.DateTimeField(blank=True, null=True)
-
+    
     class Meta:
         managed = False
         db_table = 'tickets'

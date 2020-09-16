@@ -11,22 +11,47 @@
   </div>
 </div>
 <div class="container col-md-6">
+    <div class="well">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="control-label col-sm-3">Ticket ID:</label>
+             <label class="col-sm-2">#{{ ticket.ticket_id }}</label>
+             <label class="control-label col-sm-3">Issued By:</label>
+             <label class="col-sm-3">{{ userInfo.username }}</label> 
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-3">Issue:</label>
+            <label>{{ ticket.issue_type }}</label>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-3">Issued At:</label>
+            <label>{{ ticket.created_at }}</label>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-3">Email:</label>
+             <label>{{ userInfo.email }}</label>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-3">Description:</label>
+             <label>{{ ticket.description }}</label>
+        </div>
+  
+      </form>
+    </div>
   <form method="POST" >
     {% csrf_token %}
   <div class="form-row">
     <div class="form-group  col-md-6">
-      {{ form.issue_type|as_crispy_field }}
       {{ form.finish_date|as_crispy_field }}
-      {{ form.priority|as_crispy_field }}
       {{ form.assigned_to|as_crispy_field }}
     </div>
     <div class="form-group col-md-6">
-      {{ form.description|as_crispy_field }}
+      {{ form.priority|as_crispy_field }}
     </div>
   </div>
   <div class="form-row">
     <div class="form-group  col-md-6">
-      <button type="submit" class="btn btn-success btn-block"> <i class="fa fa-save" aria-hidden="true"></i>  Create</button>
+      <button type="submit" class="btn btn-success btn-block"> <i class="fa fa-save" aria-hidden="true"></i>  Assign</button>
     </div>
     <div class="form-group col-md-6">
       <a type="button" href="/dashboard/tickets" class="btn btn-danger btn-block" style="color: white;"><i class="fa fa-times-circle-o" aria-hidden="true"></i>  Cancel</a>
