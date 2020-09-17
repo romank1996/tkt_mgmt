@@ -28,6 +28,6 @@ urlpatterns = [
     path('dashboard/', include('engineer.urls')),
     path('', include('engineer.urls')),
     path('accounts/', include('accounts.urls', namespace='accounts')),
-    # path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 
 ]

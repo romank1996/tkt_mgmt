@@ -14,8 +14,10 @@ def index(response):
 
 @login_required(login_url='/login/')
 def my_tickets(response):
-    tickets = Tickets.objects.filter(user = response.user).all
-    return render(response, 'usr/tickets.html',{'tickets':tickets})    
+    open_tickets = Tickets.objects.filter(is_closed=None,user=response.user)
+    closed_tkts = Tickets.objects.filter(is_closed=True,user=response.user)
+
+    return render(response, 'usr/tickets.html',{'open_tickets':open_tickets,'closed_tkts':closed_tkts})    
 
 @login_required(login_url='/login/')
 def file_a_ticket(response):
@@ -30,7 +32,7 @@ def file_a_ticket(response):
                 'Ticket Filed',
                 'Your Ticket has been issued. You can check in the app for recent updates.',
                 settings.DEFAULT_FROM_EMAIL,
-                ['lobolic222@mailetk.com'],
+                [tickets.user.email],
                 fail_silently=False,
             )
             return redirect('/dashboard/my_tickets/')

@@ -8,12 +8,23 @@
 {% endblock %}
 
 {% block content%}
+
 <div class="container">
     <div class="row">
-        <div class="col">
-            <h3>Tickets list</h3>
-          </div>
-          <div class="col col-lg-3">
+          <div class="col col-md-4">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <a class="nav-link active" data-toggle="tab" href="#new">Open Tickets</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#closed">Closed Tickets</a>
+                </li>
+                </ul>
+        </div>
+        <div class="col col-md-3 base-title text-center pb-1">
+            <h2>Tickets list</h2>
+        </div>
+          <div class="col col-md-3 offset-md-2 ">
             <a type="button" href="/dashboard/my_tickets/file_a_ticket" class="btn btn-success btn-block" style="color: white;"><i class="fa fa-plus" aria-hidden="true"></i>  Create New Ticket</a>
 
           </div>
@@ -21,42 +32,86 @@
     </div>
 
     <hr />
-    <table  id="example" class="table table-striped table-bordered" style="width:100%">
-        <thead>
-            <tr>
-                <th>Ticket No.</th>
-                <th>Issue</th>
-                <th>Due Date</th>
-                <th>Priority</th>
-                <th>Created At</th>
-                <th>Status</th>
-                <th>Assigned To</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in tickets %}
-            <tr>
-                <td>#{{ item.ticket_id }} </td>
-                <td>{{ item.issue_type }} </td>
-                <td>{{ item.finish_date }} </td>
-                <td>{{ item.priority }} </td>
-                <td>{{ item.created_at }} </td>
-                <td> {% if item.status %}
-                    {{ item.status.status }}
-                {% else %}
-                    Pending
-                {% endif %}</td>
-                <td>{{ item.assigned_to.username }} </td>
-                <td>
-                    <a type="button"  href="" class="btn btn-success"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
-                    <a type="button"  href="" class="btn btn-danger"> <i class="fa fa-ban" aria-hidden="true"></i> </a>
-                </td>
+    
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane container active" id="new">
+            <table  id="example" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Ticket No.</th>
+                        <th>Issue</th>
+                        <th>Due Date</th>
+                        <th>Priority</th>
+                        <th>Created At</th>
+                        <th>Status</th>
+                        <th>Assigned To</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in open_tickets %}
+                    <tr>
+                        <td>#{{ item.ticket_id }} </td>
+                        <td>{{ item.issue_type }} </td>
+                        <td>{{ item.finish_date }} </td>
+                        <td>{{ item.priority }} </td>
+                        <td>{{ item.created_at }} </td>
+                        <td> {% if item.status %}
+                            {{ item.status.status }}
+                        {% else %}
+                            Pending
+                        {% endif %}</td>
+                        <td>{{ item.assigned_to.username }} </td>
+                        <td>
+                            <a type="button"  href="" class="btn btn-success"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
+                            <a type="button"  href="" class="btn btn-danger"> <i class="fa fa-ban" aria-hidden="true"></i> </a>
+                        </td>
 
-            </tr>
-                {% endfor %}
-        </tbody>
-    </table>
+                    </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane container fade" id="closed">
+            <table  id="example" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Ticket No.</th>
+                        <th>Issue</th>
+                        <th>Due Date</th>
+                        <th>Priority</th>
+                        <th>Created At</th>
+                        <th>Status</th>
+                        <th>Assigned To</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in closed_tkts %}
+                    <tr>
+                        <td>#{{ item.ticket_id }} </td>
+                        <td>{{ item.issue_type }} </td>
+                        <td>{{ item.finish_date }} </td>
+                        <td>{{ item.priority }} </td>
+                        <td>{{ item.created_at }} </td>
+                        <td> {% if item.status %}
+                            {{ item.status.status }}
+                        {% else %}
+                            Pending
+                        {% endif %}</td>
+                        <td>{{ item.assigned_to.username }} </td>
+                        <td>
+                            <a type="button"  href="" class="btn btn-success"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
+                            <a type="button"  href="" class="btn btn-danger"> <i class="fa fa-ban" aria-hidden="true"></i> </a>
+                        </td>
+
+                    </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
 </div>
 
 {% endblock %}
