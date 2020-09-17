@@ -1,5 +1,5 @@
 {% extends "app/base.html" %}
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 
 {% block content %}
 
@@ -10,13 +10,26 @@
     </div>
     </div>
     {% else %}
-    <div class="container">
-        <h1>Sign Up</h1>
-        <form method="POST">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            <input type="submit" class="btn btn-primary" value="Sign Up">
-        </form>
-    </div>
+    <section class="base-section">
+        <div class="container">
+            <div class="row" style="margin-bottom: 10px;">
+                <!-- ***** FAQ Start ***** -->
+                <div class="col-md-10 offset-md-1">
+    
+                    <div class="base-title text-center pb-2">
+                        <h2>Register an Account</h2>
+                    </div>
+                </div>
+                <div class="col-md-10 offset-md-1">
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <input type="submit" class="btn btn-primary" value="Sign Up">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
     {% endif %}
 {% endblock %}

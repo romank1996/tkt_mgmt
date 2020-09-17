@@ -1,13 +1,28 @@
 {% extends "app/base.html" %}
-{% load bootstrap3 %}
+<!-- {% load bootstrap4 %} -->
 
 {% block content %}
-<div class="container">
-    <h1>Log In</h1>
-    <form method="POST">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <input type="submit" class="btn btn-default" value="Login">
-    </form>
-</div>
+<section class="base-section" style="min-height:max-content;">
+    <div class="container">
+      <div class="row" style="margin-bottom: 10px;">
+            <!-- ***** FAQ Start ***** -->
+            <div class="col-md-10 offset-md-1">
+
+                <div class="base-title text-center pb-1">
+                    <h2>Login</h2>
+                </div>
+            </div>
+            <div class="col-md-10 offset-md-1">
+                <form method="POST">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <input type="submit" class="btn btn-primary btn-block" value="Login">
+                    <div class="sign-up">
+                        Don't have an account? <a href="/accounts/signup">Create One</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

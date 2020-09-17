@@ -1,11 +1,13 @@
 {% load static %}
 
 {% load bootstrap4 %}
+{% bootstrap_javascript jquery='full' %}
 
 <!doctype html>
 <html>
     <head>
         <link rel="stylesheet" href="{% static "app/css/main.css" %}" >
+        {% block dash_style %}{% endblock %}
         {% block style %}{% endblock %}
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -17,10 +19,10 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #e3f2fd;">
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #e3f2fd;">
             <div class="d-flex flex-grow-1">
                 <span class="w-100 d-lg-none d-block"><!-- hidden spacer to center brand on mobile --></span>
-                <a class="navbar-brand d-none d-lg-inline-block" href="/">
+                <a class="navbar-brand d-none d-lg-inline-block" href="{% if user.is_authenticated %}/dashboard{% else %}/{% endif %}">
                     <img src="{% static "app/images/logo.png" %}" width="200" height="40" class="d-inline-block align-top" alt="logo">
                 </a>
                 <div class="w-100 text-right">
@@ -39,7 +41,9 @@
                     </li>
 
                     {% if user.is_authenticated %}
-                    
+                        <li class="nav-item">
+                            <a href="/dashboard" class="nav-link m-2 menu-item">Dashboard</a>
+                        </li>
                         <li class="nav-item dropdown active">
                             <a class="nav-link m-2 menu-item dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {{ user.username }}
@@ -64,18 +68,31 @@
             </div>
         </nav>
 
+        {% block dash_nav %}
+        {% endblock %}
+        
+        <div class="content-container" style="margin-top: 65px;">
 
-        <div id="content" name="content" class="main container">
-            <div class="row justify-content-center">
-                {% block content %}
-                {% endblock %}
+            <div class="container-fluid">
+          
+              <!-- Main component for a primary marketing message or call to action -->
+              <div class="jumbotron">
+                <div id="content" name="content" class="main container">
+                    <div class="row justify-content-center">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+              </div>
+          
             </div>
-            
-        </div>
+          </div>
 
         <!-- jQuery first, then Popper.js, then Bootstrap JS
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+        {% block js %}
+        {% endblock %}
+
     </body>
 </html>

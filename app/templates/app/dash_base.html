@@ -1,106 +1,48 @@
+{% extends 'app/base.html' %}
 {% load static %}
 {% load bootstrap4 %}
 
-<!doctype html>
-<html>
-    <head>
-        <style type="text/css">
-        </style>
-        <link rel="stylesheet" href="{% static "app/css/main.css" %}" >
-        <link rel="stylesheet" href="{% static "app/css/dash_base.css" %}" >
-
-        <link rel="icon" type="image/png" href="{% static "app/images/favicon.ico" %}"/>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-         <!-- Bootstrap CSS -->
-         {% bootstrap_css %}
-
-         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-        {% block style %}{% endblock %}
-
-        <title>{% block title %}Arif Systems{% endblock %}</title>
-    </head>
-
-    <body>
-        <nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: lightsteelblue;">
-            <div class="d-flex flex-grow-1">
-                <span class="w-100 d-lg-none d-block"><!-- hidden spacer to center brand on mobile --></span>
-                <a class="navbar-brand d-none d-lg-inline-block" href="/dashboard/">
-                    <img src="{% static "app/images/logo.png" %}" width="200" height="40" class="d-inline-block align-top" alt="logo">
-                </a>
-                <div class="w-100 text-right">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                </div>
-            </div>
-            <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
-                <ul class="navbar-nav ml-auto flex-nowrap">
-                    <li class="nav-item ">
-                      <a href="/profile/" class="nav-link"> <i> Welcome,  {{ user.username }}  </i> </a>
-                    </li>
-                    <li class="nav-item">
-                        
-                        <a href="{% url 'logout' %}" class="nav-link"> Log out</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+{% block dash_style %}
+<link rel="stylesheet" href="{% static "app/css/dash_base.css" %}" >
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+{% endblock %}
 
 
-        <div class="sidebar-container" style="margin-top: 65px;">
-            <div class="sidebar-logo">
-                Welcome  {{ uname }}
-            </div>
-            <ul class="sidebar-navigation">
-              <li class="header">Site Navigation</li>
-              <li>
-                <a href="/dashboard/">
-                  <i class="fa fa-home" aria-hidden="true"></i> Dashboard
-                </a>
-              </li>
-              {% block sidnav %}{% endblock %}
-              <li>
-                <a href="#">
-                  <i class="fa fa-info-circle" aria-hidden="true"></i> Information
-                </a>
-              </li>
-              <li class="header">User Navigation</li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-cog" aria-hidden="true"></i> Profile
-                </a>
-              </li>
-              <li>
-                <a href="{% url 'logout' %}">
-                  <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
-                </a>
-              </li>
-            </ul>
-          </div>
+{% block dash_nav %}
+  <div class="sidebar-container" >
+    <div class="sidebar-logo">
+        Welcome,  {{ user.username }}
+    </div>
+    <ul class="sidebar-navigation">
+      <li class="header">Site Navigation</li>
+      <li>
+        <a href="/dashboard/">
+          <i class="fa fa-home" aria-hidden="true"></i> Dashboard
+        </a>
+      </li>
+      {% block sidnav %}{% endblock %}
+      <li>
+        <a href="#">
+          <i class="fa fa-info-circle" aria-hidden="true"></i> Information
+        </a>
+      </li>
+      <li class="header">User Navigation</li>
+      <li>
+        <a href="{% url 'accounts:updateprofile' pk=user.profile.id %}">
+          <i class="fa fa-cog" aria-hidden="true"></i> Profile
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'logout' %}">
+          <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+        </a>
+      </li>
+    </ul>
+  </div>          
+{% endblock %}
+
+
           
-          <div class="content-container">
-          
-            <div class="container-fluid">
-          
-              <!-- Main component for a primary marketing message or call to action -->
-              <div class="jumbotron" style="margin-top: 65px;">
-                <div id="content" name="content" class="main container">
-                    <div class="row justify-content-center">
-                        {% block content %}
-                        {% endblock %}
-                    </div>
-              </div>
-          
-            </div>
-          </div>
 
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        {% block js %}
-        {% endblock %}
-    </body>
-</html>
+{% block js %}
+{% endblock %}
