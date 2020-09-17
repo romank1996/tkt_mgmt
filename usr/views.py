@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from .forms import TicketForm
 from app.models import Tickets
 from django.http import HttpResponseRedirect
+from mailer import send_mail
+from django.conf import settings
 # from django.urls import reverse 
 
 # Create your views here.
@@ -23,6 +25,14 @@ def file_a_ticket(response):
             tickets = form.save(commit=False)
             tickets.user = response.user
             tickets.save()
+
+            send_mail(
+                'Ticket Filed',
+                'Your Ticket has been issued. You can check in the app for recent updates.',
+                settings.DEFAULT_FROM_EMAIL,
+                ['lobolic222@mailetk.com'],
+                fail_silently=False,
+            )
             return redirect('/dashboard/my_tickets/')
     else:
         form=TicketForm()
