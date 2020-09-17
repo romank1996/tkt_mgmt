@@ -19,3 +19,19 @@ def signedin(response):
         return render(response, 'engineer/dashboard.html',{})
     elif group.name=="admin":
         return render(response, 'adm/dashboard.html', {})
+
+def dashboard(response):
+    return render(response, "app/dashboard.html")
+
+def base_template(request):
+    context={}
+    if request.user.is_authenticated:
+        user_group = request.user.groups.all()[0].name
+        if user_group == 'user':
+            context = {'base_template_name': 'usr/usr_dash.html'}
+        elif user_group == 'admin':
+            context = {'base_template_name': 'adm/admin_sidenav.html'}
+        elif user_group == 'engineer':
+            context = {'base_template_name': 'engineer/eng_sidenav.html'}
+    
+    return context

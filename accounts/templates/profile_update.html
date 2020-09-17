@@ -1,0 +1,28 @@
+
+{% extends base_template_name %}
+{% load bootstrap4 %}
+
+{% block title %} Profile {% endblock %}
+{% block content %}
+<!-- <div class ="container"> -->
+    <!-- <div class="row"> -->
+        <div class="col-md-8">
+            <div class="box">
+                <div class="base-title text-center pb-1">
+                    <h2>Update Profile</h2>
+                </div>
+
+                <form action=" " class="needs-validation" method="POST" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+
+                    <div class="form-row">
+                        <input class="btn btn-primary" value="Save" type="submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    <!-- </div> -->
+ <!-- </div> -->
+
+ {% endblock %}

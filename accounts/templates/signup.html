@@ -1,0 +1,35 @@
+{% extends "app/base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+    <div class="container top-margin">
+    <div class="delete-box">
+        <h2>You are already logged in. Logout to Sign Up</h2>
+    </div>
+    </div>
+    {% else %}
+    <section class="base-section">
+        <div class="container">
+            <div class="row" style="margin-bottom: 10px;">
+                <!-- ***** FAQ Start ***** -->
+                <div class="col-md-10 offset-md-1">
+    
+                    <div class="base-title text-center pb-2">
+                        <h2>Register an Account</h2>
+                    </div>
+                </div>
+                <div class="col-md-10 offset-md-1">
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <input type="submit" class="btn btn-primary" value="Sign Up">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+{% endblock %}

@@ -41,12 +41,13 @@ INSTALLED_APPS = [
     'bootstrap_datepicker_plus',
     'crispy_forms',
     'app.apps.AppConfig',
-    'register.apps.RegisterConfig',
     'adm.apps.AdmConfig',
     'engineer.apps.EngineerConfig',
     'usr.apps.UsrConfig',
     'bootstrap4',
     'mailer',
+    'accounts',
+    # 'bootstrap3',
 ]
 
 MIDDLEWARE = [
@@ -68,6 +69,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'app.views.base_template',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -141,7 +143,8 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = '/dashboard/'
 
-LOGOUT_REDIRECT_URL = '/login/'
+
+LOGOUT_REDIRECT_URL = '/account/login/'
 
 #Bootstrap block
 BOOTSTRAP4 = {
