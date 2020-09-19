@@ -1,5 +1,6 @@
 from django.http import HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
+# from .view import unauthorized_access
 
 # decorator to prevent user from accessing restricted pages
 def unauthenticated_user(view_func):
@@ -22,6 +23,6 @@ def allowed_user(allowed_roles=[]):
             if group in allowed_roles:
                 return view_func(request, *args, **kwargs)
             else:
-                return HttpResponse("You are not authorized to view this page.")
+                return render(request, 'not_authorized.html')
         return wrapper_func
     return decorator
