@@ -48,9 +48,8 @@ def register_user_by_admin(request):
             group = Group.objects.get(name='engineer')
             user.groups.add(group)
             raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=user.username, password=raw_password)
-            login(request, user)
-            return redirect('/dashboard')
+            messages.success(request, 'Account with user access of Engineer was created.')
+            return redirect('/accounts/register_engineer')
     else:
         form = SignUpForm()
     return render(request, 'register_by_admin.html', {'form': form})

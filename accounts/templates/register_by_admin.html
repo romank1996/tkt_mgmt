@@ -4,7 +4,10 @@
 
 {% load bootstrap4 %}
 
-{% block content %}    
+{% block content %}
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
     <section class="base-section">
         <div class="container">
             <div class="row" style="margin-bottom: 10px;">
