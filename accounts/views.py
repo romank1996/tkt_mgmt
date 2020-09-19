@@ -9,6 +9,8 @@ from django.contrib.auth.models import Group
 from .forms import ProfileForm, SignUpForm
 from . models import Profile
 
+from .decorators import unauthenticated_user, allowed_user
+
 # Create your views here.
 
 # class based view for signup form
@@ -18,6 +20,7 @@ class SignUp(CreateView):
     template_name = 'signup.html'
 
 # function based view used to accomodate contact_no in sign up form
+@unauthenticated_user
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -37,6 +40,7 @@ def signup(request):
     return render(request, 'signup.html', {'form': form})
 
 # function based view used to accomodate contact_no in sign up form
+@allowed_user(allowed_roles=['admin'])
 def register_user_by_admin(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
