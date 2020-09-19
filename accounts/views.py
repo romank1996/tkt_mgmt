@@ -36,6 +36,25 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
 
+# function based view used to accomodate contact_no in sign up form
+def register_user_by_admin(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.refresh_from_db()
+            user.profile.contact_no = form.cleaned_data.get('contact_no')
+            user.save()
+            group = Group.objects.get(name='engineer')
+            user.groups.add(group)
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=user.username, password=raw_password)
+            login(request, user)
+            return redirect('/dashboard')
+    else:
+        form = SignUpForm()
+    return render(request, 'register_by_admin.html', {'form': form})
+
 def update_profile(request, pk):
     template = 'profile_update.html'    
     profile = get_object_or_404(Profile, pk = pk)

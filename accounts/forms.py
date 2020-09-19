@@ -12,6 +12,13 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username','email', 'contact_no', 'password1', 'password2',)
 
+class UserRegisterAdmin(UserCreationForm):
+    contact_no = forms.CharField()
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'contact_no', 'password1', 'password2')
+
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
