@@ -64,8 +64,8 @@
                         {% endif %}</td>
                         <td>{{ item.assigned_to.username }} </td>
                         <td>
-                            <a type="button"  href="" class="btn btn-success"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
-                            <a type="button"  href="" class="btn btn-danger"> <i class="fa fa-ban" aria-hidden="true"></i> </a>
+                            <a type="button" id="{% url 'usr_app:view_ticket' item.pk %}" onclick="modalopen(this.id)" class="btn btn-success"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
+                            <a type="button"  class="btn btn-danger"> <i class="fa fa-ban" aria-hidden="true"></i> </a>
                         </td>
 
                     </tr>
@@ -102,8 +102,8 @@
                         {% endif %}</td>
                         <td>{{ item.assigned_to.username }} </td>
                         <td>
-                            <a type="button"  href="" class="btn btn-success"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
-                            <a type="button"  href="" class="btn btn-danger"> <i class="fa fa-ban" aria-hidden="true"></i> </a>
+                            <a type="button" data-id="{% url 'usr_app:view_ticket' item.pk %}"> onclick="modalopen()" class="btn btn-success"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
+                            <a type="button" class="btn btn-danger"> <i class="fa fa-ban" aria-hidden="true"></i> </a>
                         </td>
 
                     </tr>
@@ -113,17 +113,28 @@
 
         </div>
 </div>
-
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content"></div>
+    </div>
+  </div>
 {% endblock %}
 
 {% block js %}
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
 <script>
     $(document).ready(function() {
         $('#example').DataTable();
     } );
 
+    function modalopen(id){
+        $(this).modalForm({
+        formURL: id
+    });
+    }
+    
 </script>
 {% endblock %}

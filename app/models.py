@@ -165,7 +165,7 @@ class TicketAssignHistory(models.Model):
 
 
 class TicketStatusHistory(models.Model):
-    ticket_id = models.IntegerField(blank=True, null=True)
+    ticket_id = models.ForeignKey(Tickets,db_column='ticket_id',on_delete=models.DO_NOTHING, blank=True, null=True)
     status_id = models.IntegerField(blank=True, null=True)
     change_time = models.DateTimeField(blank=True, null=True)
     modified_by = models.ForeignKey(User, db_column='modified_by',on_delete=models.DO_NOTHING, blank=True, null=True)

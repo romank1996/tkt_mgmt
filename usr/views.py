@@ -1,10 +1,19 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from .forms import TicketForm
-from app.models import Tickets
-from django.http import HttpResponseRedirect
-from mailer import send_mail
+from bootstrap_modal_forms.generic import BSModalCreateView, BSModalReadView
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.core.serializers import serialize
+from django.forms.models import model_to_dict
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
+from django.views.generic.detail import DetailView
+from mailer import send_mail
+
+from app.models import Tickets, TicketStatusHistory
+
+from .forms import TicketForm, ViewTicketForm
+from .models import UserTickets
+
 # from django.urls import reverse 
 
 # Create your views here.
@@ -41,3 +50,12 @@ def file_a_ticket(response):
     args = {'form': form}
 
     return render(response, 'usr/file_a_ticket.html',args)
+
+class TicketView(DetailView):
+    model = Tickets
+    template_name = 'usr/ticket_detail.html'
+
+def TicketHistoryView(response):
+    tkt_id = response.GET.get('pk', None)
+    data = TicketStatusHistory.objects.filter(ticket_id=tkt_id).all()
+    return JsonResponse(serialize('json', data),safe=False)

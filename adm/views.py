@@ -66,7 +66,7 @@ def assign_tickets(response, pk):
 
             ticketHistory = TicketStatusHistory()
             ticketHistory.status_id=ticket.status.status_id
-            ticketHistory.ticket_id=ticket.ticket_id
+            ticketHistory.ticket_id=ticket
             ticketHistory.change_time=datetime.datetime.now()
             ticketHistory.modified_by=response.user
             ticketHistory.comment="Ticket is Assigned"

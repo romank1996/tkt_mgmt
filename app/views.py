@@ -25,7 +25,7 @@ def dashboard(response):
 
 def base_template(request):
     context={}
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and not request.user.is_superuser:
         user_group = request.user.groups.all()[0].name
         if user_group == 'user':
             context = {'base_template_name': 'usr/usr_dash.html'}
@@ -34,4 +34,6 @@ def base_template(request):
         elif user_group == 'engineer':
             context = {'base_template_name': 'engineer/eng_sidenav.html'}
     
+    if request.user.is_authenticated and request.user.is_superuser:
+        context = {'base_template_name': 'adm/admin_sidenav.html'}
     return context
