@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from app.models import Tickets,Status
+from django.contrib.auth.models import User
 
 # Create your views here.
 @login_required(login_url='/login/')
@@ -21,3 +22,15 @@ def ticket_list(response):
         'unassigned':unassigned
     }
     return render(response, 'engineer/tickets_list.html',args)
+
+@login_required(login_url='/login/')
+def engineers_list(response):
+    active_engineers = User.objects.filter(groups__name='engineer', is_active=True)
+    inactive_engineers = User.objects.filter(groups__name='engineer', is_active=False)
+
+    args = {
+        'active_engineers': active_engineers,
+        'inactive_engineers': inactive_engineers
+    }
+
+    return render(response, 'engineer/engineers_list.html', args)
