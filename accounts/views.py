@@ -27,6 +27,9 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             user.refresh_from_db()
+            user.profile.first_name = form.cleaned_data.get('first_name')
+            user.profile.last_name = form.cleaned_data.get('last_name')
+            user.profile.email = form.cleaned_data.get('email')
             user.profile.contact_no = form.cleaned_data.get('contact_no')
             user.save()
             group = Group.objects.get(name='user')
@@ -47,6 +50,9 @@ def register_user_by_admin(request):
         if form.is_valid():
             user = form.save()
             user.refresh_from_db()
+            user.profile.first_name = form.cleaned_data.get('first_name')
+            user.profile.last_name = form.cleaned_data.get('last_name')
+            user.profile.email = form.cleaned_data.get('email')
             user.profile.contact_no = form.cleaned_data.get('contact_no')
             user.save()
             group = Group.objects.get(name='engineer')
