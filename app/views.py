@@ -34,4 +34,6 @@ def base_template(request):
         elif user_group == 'engineer':
             context = {'base_template_name': 'engineer/eng_sidenav.html'}
     
+    if request.user.is_authenticated and request.user.is_superuser:
+        context = {'base_template_name': 'adm/admin_sidenav.html'}
     return context
