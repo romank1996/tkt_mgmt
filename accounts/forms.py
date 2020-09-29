@@ -10,14 +10,14 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'username', 'email', 'contact_no', 'password1', 'password2')
+        fields = ('username','email', 'contact_no', 'password1', 'password2',)
 
 class UserRegisterAdmin(UserCreationForm):
     contact_no = forms.CharField()
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'username', 'email', 'contact_no', 'password1', 'password2')
+        fields = ('username', 'email', 'contact_no', 'password1', 'password2')
 
 class ProfileForm(forms.ModelForm):
     class Meta:

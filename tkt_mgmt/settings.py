@@ -45,9 +45,8 @@ INSTALLED_APPS = [
     'engineer.apps.EngineerConfig',
     'usr.apps.UsrConfig',
     'bootstrap4',
-    'mailer',
     'accounts',
-    # 'bootstrap3',
+    'bootstrap_modal_forms',
 ]
 
 MIDDLEWARE = [
@@ -148,10 +147,15 @@ LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 #Bootstrap block
 BOOTSTRAP4 = {
+    "jquery_url": {
+        "url": "https://code.jquery.com/jquery-3.5.1.js",
+    },
+    "jquery_slim_url": {
+        "url": "https://code.jquery.com/jquery-3.5.1.slim.js",
+    },
     'include_jquery': True,
 }
 
-EMAIL_BACKEND = "mailer.backend.DbBackend"
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'no.reply.arifsystems@gmail.com'

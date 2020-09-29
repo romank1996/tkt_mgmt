@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from app.models import Tickets,Status
+from app import status_change
+from django.http import JsonResponse
 
 # Create your views here.
 @login_required(login_url='/login/')
@@ -21,3 +23,17 @@ def ticket_list(response):
         'unassigned':unassigned
     }
     return render(response, 'engineer/tickets_list.html',args)
+
+
+def start_working(request):
+    if request.is_ajax and request.method == "GET":
+        # get the nick name from the client side.
+        pk = request.GET.get("pk", None)
+        ticket = Tickets.objects.filter(ticket_id=pk).first()
+        ticket.status = Status.objects.get(status='Inprogress')
+        ticket.save()
+        status_change.change_status(ticket,request.user,'Started Working on Ticket')
+
+        return JsonResponse({'data': 'success'}, status = 200)
+
+    return JsonResponse({}, status = 400)

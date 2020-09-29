@@ -1,12 +1,19 @@
-from django.shortcuts import render,redirect
-from django.views.generic import UpdateView, ListView
-from django.contrib.auth.decorators import login_required
-from app.models import Tickets,Status,TicketStatusHistory,TicketAssignHistory
-from .forms import TicketForm,TicketAssignForm
-from django.http import HttpResponse
-from django.template.loader import render_to_string
 import datetime
+
+from app import status_change
+from app.models import (Status, TicketAssignHistory, Tickets,
+                        TicketStatusHistory)
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db.models import Q
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
+from django.views.generic import ListView, UpdateView
+
+from .forms import TicketAssignForm, TicketForm
+
+
 # Create your views here.
 @login_required(login_url='/login/')
 def index(response):
@@ -14,8 +21,18 @@ def index(response):
 
 @login_required(login_url='/login/')
 def tickets(response):
-    tickets = Tickets.objects.all()
-    return render(response, 'adm/admin_tickets.html',{'tickets':tickets})
+    new_tickets = Tickets.objects.filter((Q(is_closed=None) | Q(is_closed = False)),assigned_to=None).order_by('ticket_id')
+    assigned = Tickets.objects.filter(status=Status.objects.get(status='Assigned'))
+    working_on = Tickets.objects.filter(status=Status.objects.get(status='Inprogress'))
+    complete = Tickets.objects.filter(status=Status.objects.get(status='Complete'))
+
+    args = {
+        'new_tickets':new_tickets,
+        'assigned':assigned,
+        'working_on':working_on,
+        'complete':complete
+    }
+    return render(response, 'adm/admin_tickets.html',args)
 
 
 @login_required(login_url='/login/')
@@ -64,13 +81,7 @@ def assign_tickets(response, pk):
             ticket.status = Status.objects.get(status='Assigned')
             ticket.save()
 
-            ticketHistory = TicketStatusHistory()
-            ticketHistory.status_id=ticket.status.status_id
-            ticketHistory.ticket_id=ticket.ticket_id
-            ticketHistory.change_time=datetime.datetime.now()
-            ticketHistory.modified_by=response.user
-            ticketHistory.comment="Ticket is Assigned"
-            ticketHistory.save()
+            status_change.change_status(ticket, response.user, 'Ticket is Assigned')
             
             assignHistory=TicketAssignHistory(ticket_id=ticket.ticket_id,assigned_to=tickets.assigned_to,assigned_time=datetime.datetime.now(),assigned_by=response.user)
             assignHistory.save()
