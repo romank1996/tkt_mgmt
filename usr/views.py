@@ -1,14 +1,14 @@
 from app.models import Tickets, TicketStatusHistory
-from asgiref.sync import sync_to_async
 from bootstrap_modal_forms.generic import BSModalReadView
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.core import mail, serializers
+from django.core import serializers
 from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
-
+from app import notification
 from .forms import TicketForm
+from asgiref.sync import sync_to_async
 
 # from django.urls import reverse 
 
@@ -33,13 +33,8 @@ def file_a_ticket(response):
             tickets.user = response.user
             tickets.save()
 
-            mail.send_mail(
-                'Ticket Filed',
-                'Your Ticket has been issued. You can check in the app for recent updates.',
-                settings.DEFAULT_FROM_EMAIL,
-                [tickets.user.profile.email],
-                fail_silently=False,
-            )
+            sync_to_async(notification.email_notification(tickets, True))
+
             return redirect('/dashboard/my_tickets/')
     else:
         form=TicketForm()

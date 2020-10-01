@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from app.models import Tickets,Status
-from app import status_change
+from app import notification
 from django.http import JsonResponse
 
 # Create your views here.
@@ -32,7 +32,23 @@ def start_working(request):
         ticket = Tickets.objects.filter(ticket_id=pk).first()
         ticket.status = Status.objects.get(status='Inprogress')
         ticket.save()
-        status_change.change_status(ticket,request.user,'Started Working on Ticket')
+        notification.change_status(ticket,request.user,'Started Working on Ticket')
+
+        return JsonResponse({'data': 'success'}, status = 200)
+
+    return JsonResponse({}, status = 400)
+
+
+def close_ticket(request):
+    if request.is_ajax and request.method == "GET":
+        # get the nick name from the client side.
+        pk = request.GET.get("pk", None)
+        comment = request.GET.get("comment", None)
+        ticket = Tickets.objects.filter(ticket_id=pk).first()
+        ticket.status = Status.objects.get(status='Complete')
+        ticket.is_closed = True
+        ticket.save()
+        notification.change_status(ticket,request.user,('Ticket has been successfully closed.' if comment == '' else comment))
 
         return JsonResponse({'data': 'success'}, status = 200)
 

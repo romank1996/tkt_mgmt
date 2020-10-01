@@ -135,7 +135,7 @@ class Tickets(models.Model):
         ('medium', 'Medium'),
         ('low', 'Low'),
     )
-    ticket_id = models.IntegerField(primary_key=True)
+    ticket_id = models.AutoField(primary_key=True)
     issue_type = models.CharField(max_length=25, blank=False, null=False)
     description = models.TextField(max_length=255, blank=False, null=False)
     finish_date = models.DateField(blank=False, null=False)
@@ -177,7 +177,7 @@ class TicketStatusHistory(models.Model):
 
 
 class Faqs(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     question = models.CharField(max_length=255, blank=True, null=True)
     answer = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)

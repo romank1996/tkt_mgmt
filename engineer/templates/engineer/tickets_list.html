@@ -74,7 +74,7 @@
                         <td>{{ item.priority }} </td>
                         <td>
                             <!-- <a type="button"  href="{% url 'assign_tickets' item.ticket_id %}" class="btn btn-success btn-block"> <i class="fa fa-user-plus" aria-hidden="true"></i>  Assign</a> -->
-                            <a type="button" data-id="{% url 'user_tickets:ticket_details' item.ticket_id %}" class="viewtkt btn btn-success"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
+                            <a type="button" data-id="{% url 'user_tickets:ticket_details' item.ticket_id %}" class="viewtkt btn btn-primary"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
                             <a type="button" data-toggle="modal" data-id="{{ item.ticket_id }}" data-target="#confirmationModal" class="start_working btn btn-success"> <i class="fa fa-play-circle" aria-hidden="true"></i>  </a>
                         </td>
                     </tr>
@@ -110,7 +110,8 @@
                         <td>{{ item.priority }} </td>
                         <td>
                             <!-- <a type="button"  href="{% url 'assign_tickets' item.ticket_id %}" class="btn btn-success btn-block"> <i class="fa fa-user-plus" aria-hidden="true"></i>  Assign</a> -->
-                            <a type="button" data-id="{% url 'user_tickets:ticket_details' item.ticket_id %}" class="viewtkt btn btn-success"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
+                            <a type="button" data-id="{% url 'user_tickets:ticket_details' item.ticket_id %}" class="viewtkt btn btn-primary"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
+                            <a type="button" data-toggle="modal" data-id="{{ item.ticket_id }}" data-target="#confirmationModal" class="close_tkt btn btn-success"> <i class="fa fa-play-circle" aria-hidden="true"></i>  </a>
                         </td>
                     </tr>
                         {% endfor %}
@@ -145,7 +146,7 @@
                         <td>{{ item.priority }} </td>
                         <td>
                             <!-- <a type="button"  href="{% url 'assign_tickets' item.ticket_id %}" class="btn btn-success btn-block"> <i class="fa fa-user-plus" aria-hidden="true"></i>  Assign</a> -->
-                            <a type="button" data-id="{% url 'user_tickets:ticket_details' item.ticket_id %}" class="viewtkt btn btn-success"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
+                            <a type="button" data-id="{% url 'user_tickets:ticket_details' item.ticket_id %}" class="viewtkt btn btn-primary"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
                         </td>
                     </tr>
                         {% endfor %}
@@ -180,7 +181,7 @@
                         <td>{{ item.priority }} </td>
                         <td>
                             <!-- <a type="button"  href="{% url 'assign_tickets' item.ticket_id %}" class="btn btn-success btn-block"> <i class="fa fa-user-plus" aria-hidden="true"></i>  Assign</a> -->
-                            <a type="button" data-id="{% url 'user_tickets:ticket_details' item.ticket_id %}" class="viewtkt btn btn-success"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
+                            <a type="button" data-id="{% url 'user_tickets:ticket_details' item.ticket_id %}" class="viewtkt btn btn-primary"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
                         </td>
                     </tr>
                         {% endfor %}
@@ -208,22 +209,46 @@
             var button = $(event.relatedTarget) // Button that triggered the modal
             ticket_id = parseInt( button.data('id'));
             var modal = $(this)
-            modal.find('.modal-title').text('Start Ticket #' + ticket_id)
-            modal.find('.modal-body').text('Do you want to start working on Issue #'+ ticket_id + '?')
+            modal.find('.modal-title').text('Ticket #' + ticket_id)
+            var confirm_url;
+            var args;
+            if(button.hasClass('start_working')){
+                modal.find('.modal-body').text('Do you want to start working on Issue #'+ ticket_id + '?')
+                confirm_url = "{% url 'engineer_app:start_working_confirm' %}";
+                
+                
+            } else if (button.hasClass('close_tkt')) {
+                html = '';
+                html += '<h6>Have you solved the Issue?</h6>';
+                html += '<form><textarea id="close_comment" class="form-control" placeholder="Type your comment for future references... (optional)" ></textarea>';
+                modal.find('.modal-body').html(html)
+                
+                confirm_url = "{% url 'engineer_app:close_ticket' %}";
+                
+            }
+           
             $('#btn_confirm').off('click').one('click', function(){
+                if(button.hasClass('close_tkt')){
+                    args = {
+                        'pk': ticket_id,
+                        'comment': $('#close_comment').val()
+                    }
+                } else{
+                    args = {
+                        'pk': ticket_id,
+                    }
+                }
+                debugger
                 $.ajax({
                     type: 'GET',
-                    url: "{% url 'engineer_app:start_working_confirm' %}",
-                    data: {
-                        'pk': ticket_id
-                    },
+                    url: confirm_url,
+                    data: args,
                     dataType: 'json',
                     success: function (data) {
                         document.location.href ="{% url 'engineer_app:eng_ticket_list' %}"
                     }
                 });
             });
-            
         });
     });
 

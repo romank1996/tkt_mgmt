@@ -1,6 +1,6 @@
 import datetime
 
-from app import status_change
+from app import notification
 from app.models import (Status, TicketAssignHistory, Tickets,
                         TicketStatusHistory)
 from django.contrib.auth.decorators import login_required
@@ -50,21 +50,6 @@ def create_new_ticket(response):
 
     return render(response, 'adm/create_new_ticket.html',args)
 
-
-# class TicketAssignView(UpdateView):
-#     model = Tickets
-#     form_class = TicketForm
-#     template_name = 'adm/assign_tickets.html'
-
-#     def dispatch(self, **kwargs):
-#         self.ticket_id = kwargs['pk']
-#         return super(TicketAssignView, self).dispatch(**kwargs)
-
-#     def form_valid(self, form):
-#         form.save()
-#         ticket = Tickets.objects.get(ticket_id=self.ticket_id)
-#         return HttpResponse(render_to_string('adm/assign_tickets_success.html', {'ticket': ticket}))
-
 @login_required(login_url='/login/')
 def assign_tickets(response, pk):
     ticket = Tickets.objects.get(ticket_id=pk)
@@ -81,7 +66,7 @@ def assign_tickets(response, pk):
             ticket.status = Status.objects.get(status='Assigned')
             ticket.save()
 
-            status_change.change_status(ticket, response.user, 'Ticket is Assigned')
+            notification.change_status(ticket, response.user, 'Ticket is Assigned')
             
             assignHistory=TicketAssignHistory(ticket_id=ticket.ticket_id,assigned_to=tickets.assigned_to,assigned_time=datetime.datetime.now(),assigned_by=response.user)
             assignHistory.save()
