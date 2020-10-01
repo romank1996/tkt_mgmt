@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from app.models import Tickets,Status
 from app import notification
 from django.http import JsonResponse
+from django.contrib.auth.models import User
 
 # Create your views here.
 @login_required(login_url='/login/')
@@ -24,6 +25,7 @@ def ticket_list(response):
     }
     return render(response, 'engineer/tickets_list.html',args)
 
+<<<<<<< HEAD
 
 def start_working(request):
     if request.is_ajax and request.method == "GET":
@@ -53,3 +55,16 @@ def close_ticket(request):
         return JsonResponse({'data': 'success'}, status = 200)
 
     return JsonResponse({}, status = 400)
+=======
+@login_required(login_url='/login/')
+def engineers_list(response):
+    active_engineers = User.objects.filter(groups__name='engineer', is_active=True)
+    inactive_engineers = User.objects.filter(groups__name='engineer', is_active=False)
+
+    args = {
+        'active_engineers': active_engineers,
+        'inactive_engineers': inactive_engineers
+    }
+
+    return render(response, 'engineer/engineers_list.html', args)
+>>>>>>> origin/update_profile
