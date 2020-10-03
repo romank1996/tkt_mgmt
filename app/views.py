@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Faqs
+from django.views.generic import CreateView, DetailView, UpdateView
 
 def index(response):
     return render(response, "app/base.html", {})
@@ -37,3 +38,18 @@ def base_template(request):
     if request.user.is_authenticated and request.user.is_superuser:
         context = {'base_template_name': 'adm/admin_sidenav.html'}
     return context
+
+
+# CBV for FAQs
+class CreateFaq(CreateView):
+    model = Faqs
+    fields = '__all__'
+
+
+class DetailFaq(DetailView):
+    model = Faqs
+
+
+class UpdateFaq(UpdateView):
+    model = Faqs
+    fields = '__all__'

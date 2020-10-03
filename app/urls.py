@@ -8,4 +8,5 @@ urlpatterns = [
     path('faq/', views.faq, name='faq'),
     path('dashboard/', views.signedin, name='signedin'),
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('create_faq', views.CreateFaq.as_view(), name='create_faq'),
 ]
