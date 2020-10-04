@@ -38,12 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap_datepicker_plus',
     'crispy_forms',
     'app.apps.AppConfig',
-    'register.apps.RegisterConfig',
     'adm.apps.AdmConfig',
     'engineer.apps.EngineerConfig',
     'usr.apps.UsrConfig',
+    'bootstrap4',
+    'accounts',
+    'bootstrap_modal_forms',
+    'background_task',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +69,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'app.views.base_template',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -138,4 +143,26 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = '/dashboard/'
 
-LOGOUT_REDIRECT_URL = '/login/'
+
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+
+#Bootstrap block
+BOOTSTRAP4 = {
+    "jquery_url": {
+        "url": "https://code.jquery.com/jquery-3.5.1.js",
+    },
+    "jquery_slim_url": {
+        "url": "https://code.jquery.com/jquery-3.5.1.slim.js",
+    },
+    'include_jquery': True,
+}
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'no.reply.arifsystems@gmail.com'
+EMAIL_HOST_PASSWORD = 'arif_systems'
+EMAIL_USE_TLS = True
+
+BACKGROUND_TASK_RUN_ASYNC = True
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'

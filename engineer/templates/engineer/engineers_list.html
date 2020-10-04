@@ -1,0 +1,104 @@
+{% extends base_template_name %}
+
+{% block title %}Engineers{% endblock %}
+
+{% block style %}
+    <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+{% endblock %}
+
+
+{% block content%}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h3>Engineers list</h3>
+            </div>
+            <div class="col col-md-3 offset-md-2">
+                <a type="button" href="{% url 'accounts:register_engineer' %}" class="btn btn-success btn-block" style="color: white;"><i class="fa fa-plus" aria-hidden="true"></i>  Create New Engineer</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col col-md-8">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#active">Active Engineers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#inactive">Inactive Engineers</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <hr />
+        <div class="tab-content">
+            <div class="tab-pane container active" id="active">
+                <table id="active_engineers" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Contact No</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for engineer in active_engineers %}
+                            <tr>
+                                <td>{{ engineer.first_name }}</td>
+                                <td>{{ engineer.last_name }}</td>
+                                <td>{{ engineer.username }}</td>
+                                <td>{{ engineer.email }}</td>
+                                <td>{{ engineer.profile.contact_no }}</td>
+                                <td>{{ engineer.profile.address }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tab-pane container fade" id="inactive">
+                <table id="inactive_engineers" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Contact No</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for engineer in inactive_engineers %}
+                            <tr>
+                                <td>{{ engineer.first_name }}</td>
+                                <td>{{ engineer.last_name }}</td>
+                                <td>{{ engineer.username }}</td>
+                                <td>{{ engineer.email }}</td>
+                                <td>{{ engineer.profile.contact_no }}</td>
+                                <td>{{ engineer.profile.address }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#active_engineers').DataTable();
+            $('#inactive_engineers').DataTable();
+        } );
+
+    </script>
+{% endblock %}
