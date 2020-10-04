@@ -10,6 +10,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.views.generic import ListView, UpdateView
+import json
 
 from .forms import TicketAssignForm, TicketForm
 
@@ -17,7 +18,13 @@ from .forms import TicketAssignForm, TicketForm
 # Create your views here.
 @login_required(login_url='/login/')
 def index(response):
-    return render(response, 'adm/dashboard.html',{})
+    new_tickets = Tickets.objects.filter((Q(is_closed=None) | Q(is_closed = False)),assigned_to=None).count()
+    assigned = Tickets.objects.filter(status=Status.objects.get(status='Assigned')).count()
+    working_on = Tickets.objects.filter(status=Status.objects.get(status='Inprogress')).count()
+    complete = Tickets.objects.filter(status=Status.objects.get(status='Complete')).count()
+    # data = (['Ticket Status','Number of Tickets'],['New Tickets',new_tickets],['Assigned Tickets',assigned],['Inprogress',working_on],['Completed',complete])
+    data = (['New Tickets',new_tickets],['Assigned Tickets',assigned],['Inprogress',working_on],['Completed',complete])
+    return render(response, 'adm/dashboard.html',{'data':json.dumps(data)})
 
 @login_required(login_url='/login/')
 def tickets(response):

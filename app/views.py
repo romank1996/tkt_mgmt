@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from .models import Faqs
-
+from django.urls import reverse, reverse_lazy
+from adm import views as admin_views
+from engineer import views as engineer_views
+from usr import views as user_views
 def index(response):
     return render(response, "app/base.html", {})
 
@@ -14,11 +17,11 @@ def home(response):
 def signedin(response):
     group = response.user.groups.filter(user=response.user)[0]
     if group.name=="user":
-        return render(response, 'usr/dashboard.html', {})
+        return user_views.index(response)
     elif group.name=="engineer":
-        return render(response, 'engineer/dashboard.html',{})
+        return engineer_views.index(response)
     elif group.name=="admin":
-        return render(response, 'adm/dashboard.html', {})
+        return admin_views.index(response)
 
 def dashboard(response):
     return render(response, "app/dashboard.html")

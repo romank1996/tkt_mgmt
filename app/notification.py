@@ -2,9 +2,10 @@ from app.models import TicketStatusHistory
 import datetime
 from django.core import mail
 from app.models import Status
-from asgiref.sync import sync_to_async
 from django.conf import settings
 from django.contrib.auth.models import User
+from background_task import background
+from django.core.management import call_command
 
 def change_status(ticket, user, comment):
     ticketHistory = TicketStatusHistory()
@@ -15,9 +16,7 @@ def change_status(ticket, user, comment):
     ticketHistory.comment=comment
     ticketHistory.save()
 
-    sync_to_async(email_notification(ticket, False))
-
-
+    email_notification(ticket, False)
 
 def email_notification(ticket, is_new):
     subject = 'Ticket Status Update'
@@ -48,6 +47,11 @@ def email_notification(ticket, is_new):
         message = ('Status of Ticket #' + ticket_id + ' has been updated.' +
         'Please visit website to view further details. Thank You.')
     
+    send_nodification.now(subject,message,to_emails)
+
+@background(schedule=30)
+def send_nodification(subject,message,to_emails):
+
     mail.send_mail(
         subject,
         message,
@@ -55,4 +59,3 @@ def email_notification(ticket, is_new):
         to_emails,
         fail_silently=True,
     )
-    

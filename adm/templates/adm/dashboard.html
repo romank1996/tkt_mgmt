@@ -1,9 +1,29 @@
 {% extends base_template_name %}
+{% load static %}
 
 {% block title %}Dashboard{% endblock %}
 
 
 
 {% block content %}
-admin Dashboard
+<div id="chart_div">
+</div>
+{% endblock %}
+{% block js %}
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load('visualization', '1.0', {'packages':['corechart']});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var datas ='{{data|safe}}';
+        debugger
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Status');
+        data.addColumn('number');
+        data.addRows({{ data|safe }});
+
+    var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+    chart.draw(data, {width: 400, height: 240, title: "Ticket Status"});
+    }
+    </script>
 {% endblock %}

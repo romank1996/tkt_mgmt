@@ -54,6 +54,7 @@ def close_ticket(request):
         return JsonResponse({'data': 'success'}, status = 200)
 
     return JsonResponse({}, status = 400)
+    
 @login_required(login_url='/login/')
 def engineers_list(response):
     active_engineers = User.objects.filter(groups__name='engineer', is_active=True)

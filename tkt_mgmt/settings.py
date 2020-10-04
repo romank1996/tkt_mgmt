@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'accounts',
     'bootstrap_modal_forms',
+    'background_task',
 ]
 
 MIDDLEWARE = [
@@ -161,3 +162,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'no.reply.arifsystems@gmail.com'
 EMAIL_HOST_PASSWORD = 'arif_systems'
 EMAIL_USE_TLS = True
+
+BACKGROUND_TASK_RUN_ASYNC = True
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'

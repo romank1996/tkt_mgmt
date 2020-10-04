@@ -8,8 +8,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
 from app import notification
 from .forms import TicketForm
-from asgiref.sync import sync_to_async
-
+import datetime
 # from django.urls import reverse 
 
 # Create your views here.
@@ -31,9 +30,10 @@ def file_a_ticket(response):
         if form.is_valid():
             tickets = form.save(commit=False)
             tickets.user = response.user
+            tickets.created_at = datetime.datetime.now()
             tickets.save()
 
-            sync_to_async(notification.email_notification(tickets, True))
+            notification.email_notification(tickets, True)
 
             return redirect('/dashboard/my_tickets/')
     else:
