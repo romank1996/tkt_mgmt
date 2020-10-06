@@ -10,4 +10,5 @@ urlpatterns = [
     path('confirmation/', views.start_working, name='start_working_confirm'),
     path('confirmation/close_tkt', views.close_ticket, name='close_ticket'),
     path('dashboard/engineers_list', views.engineers_list, name='engineers_list'),
+    path('change_active_status/<int:pk>', views.change_active_status, name='change_active_status'),
 ]

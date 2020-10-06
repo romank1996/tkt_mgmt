@@ -1,9 +1,10 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from app.models import Tickets,Status
 from app import notification
 from django.http import JsonResponse
 from django.contrib.auth.models import User
+from accounts.decorators import allowed_user
 
 # Create your views here.
 @login_required(login_url='/login/')
@@ -54,6 +55,7 @@ def close_ticket(request):
         return JsonResponse({'data': 'success'}, status = 200)
 
     return JsonResponse({}, status = 400)
+
 @login_required(login_url='/login/')
 def engineers_list(response):
     active_engineers = User.objects.filter(groups__name='engineer', is_active=True)
@@ -63,5 +65,14 @@ def engineers_list(response):
         'active_engineers': active_engineers,
         'inactive_engineers': inactive_engineers
     }
-
     return render(response, 'engineer/engineers_list.html', args)
+
+@allowed_user(allowed_roles=['admin'])
+def change_active_status(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if user.is_active == True:
+        user.is_active = False
+    elif user.is_active == False:
+        user.is_active = True
+    user.save()
+    return redirect('/dashboard/engineers_list')
