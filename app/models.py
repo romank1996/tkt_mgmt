@@ -7,6 +7,7 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
@@ -186,3 +187,6 @@ class Faqs(models.Model):
     class Meta:
         managed = False
         db_table = 'faqs'
+
+    def get_absolute_url(self):
+        return reverse("faq")

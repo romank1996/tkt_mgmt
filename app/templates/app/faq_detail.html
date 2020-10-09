@@ -1,0 +1,36 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<ul class="list-group">
+    <li class="list-group-item"><span class="pull-left"><strong class="">User:</strong></span> {{ salaryincometax.user_applicant.name }}</li>
+    <li class="list-group-item"><span class="pull-left"><strong class="">Basic Salary: </strong></span> {{ salaryincometax.basic_salary }}</li>
+    <li class="list-group-item"><span class="pull-left"><strong class="">Bonus: </strong></span> {{ salaryincometax.bonus }}</li>
+    <li class="list-group-item"><span class="pull-left"><strong class="">Overtime Payment:</strong></span> {{ salaryincometax.overtime_payment }}</li>
+    <li class="list-group-item"><span class="pull-left"><strong class="">Leave Pay: </strong></span> {{ salaryincometax.leave_pay }} </li>
+    <li class="list-group-item"><span class="pull-left"><strong class="">Other Allowance: </strong></span> {{ salaryincometax.other_allowance }} </li>
+    <li class="list-group-item"><span class="pull-left"><strong class="">Total Addition: </strong></span> {{ salaryincometax.total_addition }} </li>
+
+    <li class="list-group-item"><span class="pull-right"><strong class="">Employees PF: </strong></span> {{ salaryincometax.employees_pf }}</li>
+    <li class="list-group-item"><span class="pull-right"><strong class="">Citizen Investment Trust: </strong></span> {{ salaryincometax.citizen_investment_trust }}</li>
+    <li class="list-group-item"><span class="pull-right"><strong class="">Life Insurance:</strong></span> {{ salaryincometax.life_insurance }}</li>
+    <li class="list-group-item"><span class="pull-right"><strong class="">Medical Insurance: </strong></span> {{ salaryincometax.medical_insurance }} </li>
+    <li class="list-group-item"><span class="pull-right"><strong class="">Other Exemptions: </strong></span> {{ salaryincometax.other_exemptions }} </li>
+    <li class="list-group-item"><span class="pull-right"><strong class="">Total Deductions: </strong></span> {{ salaryincometax.total_deduction }} </li>
+    <br>
+    <br>
+    <li class="list-group-item"><span class="pull-right"><strong class="">Taxable Income: </strong></span> {{ salaryincometax.total_taxable_income }} </li>
+    <li class="list-group-item"><span class="pull-right"><strong class="">TDS: </strong></span> {{ salaryincometax.net_taxable_liability }} </li>
+</ul>
+
+<h1></h1>
+<h2></h2>
+
+<a class="btn btn-primary" href="{% url 'calculate_salary_tax' pk=salaryincometax.pk %}">
+    <span>Calculate</span>
+</a>
+
+<a class="btn btn-warning" href="{% url 'edit_salary_income' pk=salaryincometax.pk %}">
+    <span>Edit</span>
+</a>
+
+{% endblock %}

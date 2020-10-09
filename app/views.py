@@ -1,9 +1,12 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from .models import Faqs
 from django.urls import reverse, reverse_lazy
 from adm import views as admin_views
 from engineer import views as engineer_views
 from usr import views as user_views
+from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def index(response):
     return render(response, "app/base.html", {})
@@ -41,3 +44,26 @@ def base_template(request):
     if request.user.is_authenticated and request.user.is_superuser:
         context = {'base_template_name': 'adm/admin_sidenav.html'}
     return context
+
+
+# CBV for FAQs
+class CreateFaq(LoginRequiredMixin, CreateView):
+    login_url = '/accounts/login/'
+    model = Faqs
+    fields = ('question', 'answer', 'created_at')
+
+
+class DetailFaq(DetailView):
+    login_url = '/accounts/login/'
+    model = Faqs
+
+
+class UpdateFaq(LoginRequiredMixin, UpdateView):
+    model = Faqs
+    fields = ('question', 'answer', 'created_at')
+
+
+class DeleteFaq(LoginRequiredMixin, DeleteView):
+    login_url = '/accounts/login/'
+    model = Faqs
+    success_url = reverse_lazy('faq')
