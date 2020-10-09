@@ -6,25 +6,25 @@ from app.models import (Status, TicketAssignHistory, Tickets,
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.views.generic import ListView, UpdateView
 import json
-
+from django.core.serializers import serialize
 from .forms import TicketAssignForm, TicketForm
-
+import adm.admin_reports as admin_reports
 
 # Create your views here.
 @login_required(login_url='/login/')
 def index(response):
     new_tickets = Tickets.objects.filter((Q(is_closed=None) | Q(is_closed = False)),assigned_to=None).count()
-    assigned = Tickets.objects.filter(status=Status.objects.get(status='Assigned')).count()
-    working_on = Tickets.objects.filter(status=Status.objects.get(status='Inprogress')).count()
+    overdue = Tickets.objects.filter((Q(is_closed=None) | Q(is_closed = False)), finish_date__lt = datetime.datetime.today()).count()
     complete = Tickets.objects.filter(status=Status.objects.get(status='Complete')).count()
     # data = (['Ticket Status','Number of Tickets'],['New Tickets',new_tickets],['Assigned Tickets',assigned],['Inprogress',working_on],['Completed',complete])
-    data = (['New Tickets',new_tickets],['Assigned Tickets',assigned],['Inprogress',working_on],['Completed',complete])
-    return render(response, 'adm/dashboard.html',{'data':json.dumps(data)})
+    data = admin_reports.ticket_counts
+    line_data = admin_reports.ticketStatus
+    return render(response, 'adm/dashboard.html',{'new':new_tickets,'overdue':overdue,'complete':complete, 'data':data, 'line_data':line_data})
 
 @login_required(login_url='/login/')
 def tickets(response):
@@ -83,3 +83,11 @@ def assign_tickets(response, pk):
     args = {'form': form,'userInfo':userInfo, 'ticket':ticket}
 
     return render(response, 'adm/assign_tickets.html',args)
+
+
+def reports(response):
+    data = admin_reports.ticketStatus
+    args={
+        'data':data
+    }
+    return render(response,'adm/report.html', args)

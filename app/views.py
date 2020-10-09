@@ -4,6 +4,7 @@ from django.urls import reverse, reverse_lazy
 from adm import views as admin_views
 from engineer import views as engineer_views
 from usr import views as user_views
+
 def index(response):
     return render(response, "app/base.html", {})
 

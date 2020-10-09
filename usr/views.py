@@ -14,7 +14,9 @@ import datetime
 # Create your views here.
 @login_required(login_url='/login/')
 def index(response):
-    return render(response, 'usr/dashboard.html',{})
+    open_tickets = Tickets.objects.filter((Q(is_closed=None) | Q(is_closed = False)),user=response.user).count()
+    closed_tkts = Tickets.objects.filter(is_closed=True,user=response.user).count()
+    return render(response, 'usr/dashboard.html',{'new':open_tickets,'complete':closed_tkts})
 
 @login_required(login_url='/login/')
 def my_tickets(response):

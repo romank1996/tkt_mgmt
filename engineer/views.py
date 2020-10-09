@@ -4,11 +4,18 @@ from app.models import Tickets,Status
 from app import notification
 from django.http import JsonResponse
 from django.contrib.auth.models import User
-
+from django.db.models import Q
+import datetime
 # Create your views here.
 @login_required(login_url='/login/')
 def index(response):
-    return render(response, 'engineer/dashboard.html',{})
+    assined_status = status=Status.objects.get(status='Assigned')
+    inprogress_status = status=Status.objects.get(status='Inprogress')
+    new_tickets = Tickets.objects.filter(status=Status.objects.get(status='Assigned'),assigned_to=response.user).count()
+    overdue = Tickets.objects.filter((Q(status=assined_status) | Q(status = inprogress_status)), finish_date__lt = datetime.datetime.today(),assigned_to=response.user).count()
+    complete = Tickets.objects.filter(status=Status.objects.get(status='Complete'),assigned_to=response.user).count()
+
+    return render(response, 'engineer/dashboard.html',{'new':new_tickets,'overdue':overdue,'complete':complete})
 
 @login_required(login_url='/login/')
 def ticket_list(response):
