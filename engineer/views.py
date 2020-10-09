@@ -4,13 +4,10 @@ from app.models import Tickets,Status
 from app import notification
 from django.http import JsonResponse
 from django.contrib.auth.models import User
-<<<<<<< HEAD
 from django.db.models import Q
 import datetime
-=======
 from accounts.decorators import allowed_user
 
->>>>>>> origin/engineer_active
 # Create your views here.
 @login_required(login_url='/login/')
 def index(response):
@@ -66,11 +63,7 @@ def close_ticket(request):
         return JsonResponse({'data': 'success'}, status = 200)
 
     return JsonResponse({}, status = 400)
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> origin/engineer_active
 @login_required(login_url='/login/')
 def engineers_list(response):
     active_engineers = User.objects.filter(groups__name='engineer', is_active=True)
