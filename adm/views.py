@@ -95,6 +95,8 @@ def report_form(response):
     return render(response, 'adm/report_form.html')
 
 def report_form_data(request):
+    user_group = [group.name for group in request.user.groups.all()]
+
     if request.method == 'POST':
         form = ReportForm(request.POST)
         if form.is_valid():
@@ -106,7 +108,13 @@ def report_form_data(request):
 
             labels = ["Completed", "In Progress", "Overdue"]
             data = []
-            engineer_id = User.objects.get(username=username).id
+            if 'admin' in user_group:
+                engineer_id = User.objects.get(username=username).id
+            elif 'engineer' in user_group:
+                engineer_id = request.user.id
+            else:
+                print("not accessible")
+            
             queryset = Tickets.objects.filter(assigned_to__exact=engineer_id)
 
             complete_queryset = queryset.filter(status__status='Complete')
@@ -131,9 +139,11 @@ def report_form_data(request):
 
     else:
         form = ReportForm()
-
-    return render(request, 'adm/report_form.html', {'form': form})
-
+    if 'admin' in user_group:
+        return render(request, 'adm/report_form.html', {'form': form})
+    else:
+        return render(request, 'engineer/report_form_eng.html', {'form': form})
+    
 
 def find_no(queryset, date_from, date_to):
     ticket_ids = [tkt_id.pk for tkt_id in queryset]
