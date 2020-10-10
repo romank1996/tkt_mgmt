@@ -11,6 +11,8 @@ from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.views.generic import ListView, UpdateView
 import json
+from django.db.models import Sum
+from django.http import JsonResponse
 
 from .forms import TicketAssignForm, TicketForm
 
@@ -83,3 +85,73 @@ def assign_tickets(response, pk):
     args = {'form': form,'userInfo':userInfo, 'ticket':ticket}
 
     return render(response, 'adm/assign_tickets.html',args)
+
+
+# for report form
+from .forms import ReportForm
+from django.http import HttpResponseRedirect
+
+def report_form(response):
+    return render(response, 'adm/report_form.html')
+
+def report_form_data(request):
+    if request.method == 'POST':
+        form = ReportForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            date_from = form.cleaned_data['date_from']
+            date_to = form.cleaned_data['date_to']
+            print(username, date_from, date_to)
+            print(type(date_from))
+
+            labels = ["Completed", "In Progress", "Overdue"]
+            data = []
+            engineer_id = User.objects.get(username=username).id
+            queryset = Tickets.objects.filter(assigned_to__exact=engineer_id)
+
+            complete_queryset = queryset.filter(status__status='Complete')
+            no_of_completed_tickets = find_no(complete_queryset, date_from, date_to)
+            print("no of completed tickets", no_of_completed_tickets)
+            data.append(no_of_completed_tickets)
+
+            inprogress_queryset = queryset.filter(status__status='Inprogress')
+            no_of_inprogress_tickets = find_no(inprogress_queryset, date_from, date_to)
+            print("no of inprogress tickets", no_of_inprogress_tickets)
+            data.append(no_of_inprogress_tickets)
+
+            overdue_queryset = queryset.filter(status__status='Inprogress')
+            no_of_overdue_tickets = find_overdue_no(overdue_queryset, date_from, date_to)
+            print("no of overdue tickets", no_of_overdue_tickets)
+            data.append(no_of_overdue_tickets)
+
+            return render(request, 'adm/pie_chart.html', {
+                'labels': labels,
+                'data': data,
+    })
+
+    else:
+        form = ReportForm()
+
+    return render(request, 'adm/report_form.html', {'form': form})
+
+
+def find_no(queryset, date_from, date_to):
+    ticket_ids = [tkt_id.pk for tkt_id in queryset]
+    count = 0
+    for ticket_id in ticket_ids:
+        match_val = TicketStatusHistory.objects.filter(ticket_id=ticket_id)
+        match_val = match_val.order_by('-change_time')[0]
+        if date_from < match_val.change_time and match_val.change_time < date_to:
+            count = count + 1
+    return count
+
+def find_overdue_no(queryset, date_from, date_to):
+    ticket_ids = [tkt_id.pk for tkt_id in queryset]
+    count = 0
+    for ticket_id in ticket_ids:
+        match_val = TicketStatusHistory.objects.filter(ticket_id=ticket_id)
+        match_val = match_val.order_by('-change_time')[0]
+        finish_date = Tickets.objects.get(pk=ticket_id).finish_date
+        if date_from < match_val.change_time and match_val.change_time < date_to and finish_date < datetime.date.today():
+            count = count + 1
+    return count

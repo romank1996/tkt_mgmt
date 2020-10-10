@@ -26,3 +26,14 @@ class TicketAssignForm(forms.ModelForm):
             "finish_date":"Due By",
             "assigned_to":"Assign To",
         }
+
+
+# form for report
+import datetime
+class ReportForm(forms.Form):
+    username = forms.CharField(label="Username", max_length=100)
+    date_from = forms.DateTimeField(widget=forms.TextInput(attrs=
+                                {
+                                    'class':'datepicker'
+                                }))
+    date_to = forms.DateTimeField(initial=datetime.date.today)
