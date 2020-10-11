@@ -135,6 +135,7 @@ def report_form_data(request):
             return render(request, 'adm/pie_chart.html', {
                 'labels': labels,
                 'data': data,
+                'username': username,
     })
 
     else:
