@@ -1,0 +1,14 @@
+{% extends base_template_name %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input type="submit" value="Generate Report" class="btn btn-primary btn-block">
+    </form>
+{% endblock %}
+
+{% block js %}
+    {{ form.media }} 
+{% endblock %}
