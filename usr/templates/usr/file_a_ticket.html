@@ -1,9 +1,11 @@
 {% extends base_template_name %}
+{% load static %}
 {% block title %}Create New Ticket{% endblock %}
 
 
 {% load crispy_forms_tags %}
 {% block content%}
+
 <div class="col-md-10">
 
   <div class="base-title text-center pb-1">
@@ -37,4 +39,11 @@
 {% endblock %}
 {% block js %}
 {{ form.media }} 
+<script>
+  $(function(){
+      $('form').on('submit', function(e){
+        $('#loading-bar-spinner').show();
+      });
+  })
+</script>
 {% endblock %}

@@ -7,6 +7,32 @@
 <html>
     <head>
         <link rel="stylesheet" href="{% static "app/css/main.css" %}" >
+        <style >
+            #loading-bar-spinner.spinner {
+    left: 50%;
+    margin-left: -20px;
+    top: 50%;
+    margin-top: -20px;
+    position: absolute;
+    z-index: 19 !important;
+    animation: loading-bar-spinner 400ms linear infinite;
+}
+
+#loading-bar-spinner.spinner .spinner-icon {
+    width: 40px;
+    height: 40px;
+    border:  solid 4px transparent;
+    border-top-color:  #00C8B1 !important;
+    border-left-color: #00C8B1 !important;
+    border-radius: 50%;
+}
+
+@keyframes loading-bar-spinner {
+  0%   { transform: rotate(0deg);   transform: rotate(0deg); }
+  100% { transform: rotate(360deg); transform: rotate(360deg); }
+}
+
+        </style>
         {% block dash_style %}{% endblock %}
         {% block style %}{% endblock %}
         <!-- Required meta tags -->
@@ -19,6 +45,7 @@
     </head>
 
     <body>
+        <div id="loading-bar-spinner"class="spinner"><div class="spinner-icon"></div></div>
         <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #e3f2fd;">
             <div class="d-flex flex-grow-1">
                 <span class="w-100 d-lg-none d-block"><!-- hidden spacer to center brand on mobile --></span>
@@ -89,7 +116,11 @@
 
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-
+<script>
+    $(function(){
+        $('#loading-bar-spinner').hide();
+    })
+</script>
         {% block dash_js %}
         {% endblock %}
         {% block js %}

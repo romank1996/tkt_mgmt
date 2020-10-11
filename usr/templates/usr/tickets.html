@@ -52,11 +52,11 @@
                 <tbody>
                     {% for item in open_tickets %}
                     <tr>
-                        <td>#{{ item.ticket_id }} </td>
+                        <td data-order="{{ item.ticket_id }}">#{{ item.ticket_id }} </td>
                         <td>{{ item.issue_type }} </td>
-                        <td>{{ item.finish_date }} </td>
-                        <td>{{ item.priority }} </td>
-                        <td>{{ item.created_at }} </td>
+                        <td>{{ item.finish_date|date:'Y-m-d' }} </td>
+                        <td data-order="{% if item.priority == 'urgent' %} {{1}} {%elif item.priority == 'high'%}{{2}}{%elif item.priority == 'medium'%}{{3}}{%else%}{{4}}{%endif%}">{{ item.priority }} </td>
+                        <td>{{ item.created_at|date:'Y-m-d H:i' }} </td>
                         <td> {% if item.status %}
                             {{ item.status.status }}
                         {% else %}
@@ -65,9 +65,11 @@
                         <td>{{ item.assigned_to.username }} </td>
                         <td>
                             <a type="button" data-id="{% url 'user_tickets:ticket_details' item.ticket_id %}" class="viewtkt btn btn-primary"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
+                            {% if item.status %}
+                            {% else %}
                             <a type="button"  href="" class="btn btn-danger"> <i class="fa fa-ban" aria-hidden="true"></i> </a>
+                        {% endif %}
                         </td>
-
                     </tr>
                         {% endfor %}
                 </tbody>
@@ -90,11 +92,11 @@
                 <tbody>
                     {% for item in closed_tkts %}
                     <tr>
-                        <td>#{{ item.ticket_id }} </td>
+                        <td data-order="{{ item.ticket_id }}">#{{ item.ticket_id }} </td>
                         <td>{{ item.issue_type }} </td>
-                        <td>{{ item.finish_date }} </td>
-                        <td>{{ item.priority }} </td>
-                        <td>{{ item.created_at }} </td>
+                        <td>{{ item.finish_date|date:'Y-m-d' }} </td>
+                        <td  data-order="{% if item.priority == 'urgent' %} {{1}} {%elif item.priority == 'high'%}{{2}}{%elif item.priority == 'medium'%}{{3}}{%else%}{{4}}{%endif%}">{{ item.priority }} </td>
+                        <td>{{ item.created_at|date:'Y-m-d H:i' }} </td>
                         <td> {% if item.status %}
                             {{ item.status.status }}
                         {% else %}
@@ -103,7 +105,6 @@
                         <td>{{ item.assigned_to.username }} </td>
                         <td>
                             <a type="button" data-id="{% url 'user_tickets:ticket_details' item.ticket_id %}" class="viewtkt btn btn-primary"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
-                            <a type="button"  href="" class="btn btn-danger"> <i class="fa fa-ban" aria-hidden="true"></i> </a>
                         </td>
 
                     </tr>

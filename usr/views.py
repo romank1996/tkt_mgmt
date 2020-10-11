@@ -22,7 +22,6 @@ def index(response):
 def my_tickets(response):
     open_tickets = Tickets.objects.filter((Q(is_closed=None) | Q(is_closed = False)),user=response.user)
     closed_tkts = Tickets.objects.filter(is_closed=True,user=response.user)
-
     return render(response, 'usr/tickets.html',{'open_tickets':open_tickets,'closed_tkts':closed_tkts})    
 
 @login_required(login_url='/login/')
