@@ -6,7 +6,7 @@ create table status(
 INSERT into status(status_id,status) VALUES(1,'Assigned');
 INSERT into status(status_id,status) VALUES(2,'Inprogress');
 INSERT into status(status_id,status) VALUES(3,'Complete');
-INSERT into status(status_id,status) VALUES(4,'Re-opened');
+INSERT into status(status_id,status) VALUES(4,'Created');
 INSERT into status(status_id,status) VALUES(5,'Cancelled');
 
 create table tickets(
@@ -28,13 +28,6 @@ REFERENCES status(status_id)
 
 );
 
-create table ticket_assign_history(
-    id integer PRIMARY KEY AUTO_INCREMENT,
-    ticket_id integer,
-    assigned_to integer,
-    assigned_time timestamp,
-    assigned_by integer
-);
 create table ticket_status_history(
     id integer PRIMARY KEY AUTO_INCREMENT,
     ticket_id integer,
@@ -51,3 +44,8 @@ answer varchar(255),
     is_deleted boolean,
     sort_order integer
 );
+
+
+INSERT into auth_group(name) VALUES('engineer');
+INSERT into auth_group(name) VALUES('admin');
+INSERT into auth_group(name) VALUES('user');

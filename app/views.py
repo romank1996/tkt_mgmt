@@ -60,7 +60,7 @@ class DetailFaq(DetailView):
 
 class UpdateFaq(LoginRequiredMixin, UpdateView):
     model = Faqs
-    fields = ('question', 'answer', 'created_at')
+    fields = ('question', 'answer')
 
 
 class DeleteFaq(LoginRequiredMixin, DeleteView):

@@ -1,7 +1,7 @@
 import datetime
 
 from app import notification
-from app.models import (Status, TicketAssignHistory, Tickets,
+from app.models import (Status, Tickets,
                         TicketStatusHistory)
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -74,10 +74,7 @@ def assign_tickets(response, pk):
             ticket.save()
 
             notification.change_status(ticket, response.user, 'Ticket is Assigned')
-            
-            assignHistory=TicketAssignHistory(ticket_id=ticket.ticket_id,assigned_to=tickets.assigned_to,assigned_time=datetime.datetime.now(),assigned_by=response.user)
-            assignHistory.save()
-            
+                        
             return redirect('/dashboard/tickets')
 
     args = {'form': form,'userInfo':userInfo, 'ticket':ticket}
