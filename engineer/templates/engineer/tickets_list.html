@@ -63,7 +63,7 @@
                 </thead>
                 <tbody>
                     {% for item in new_tickets %}
-                    <tr>
+                <tr style="background-color: {% if item.is_past_due %}red{%endif%};">
                         <td data-order="{{ item.ticket_id }}">#{{ item.ticket_id }} </td>
                         <td>{{ item.issue_type }} </td>
                         <td>{{ item.user.username }} </td>
@@ -72,7 +72,7 @@
                         <td>
                             {{ item.status.status }}
                         </td>
-                        <td data-order="{% if item.priority == 'urgent' %} {{1}} {%elif item.priority == 'high'%}{{2}}{%elif item.priority == 'medium'%}{{3}}{%else%}{{4}}{%endif%}">{{ item.priority }} </td>
+                        <td style="background-color: {{item.priority_color}};" data-order="{{ item.priority_order }}">{{ item.priority }} </td>
                         <td>
                             <a type="button" data-id="{% url 'user_tickets:ticket_details' item.ticket_id %}" class="viewtkt btn btn-primary"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
                             <a type="button" data-toggle="modal" data-id="{{ item.ticket_id }}" data-target="#confirmationModal" class="start_working btn btn-success"> <i class="fa fa-play-circle" aria-hidden="true"></i>  </a>
@@ -98,16 +98,16 @@
                 </thead>
                 <tbody>
                     {% for item in working_on %}
-                    <tr>
+                    <tr style="background-color: {% if item.is_past_due %}red{%endif%};">
                         <td data-order="{{ item.ticket_id }}">#{{ item.ticket_id }} </td>
                         <td>{{ item.issue_type }} </td>
                         <td>{{ item.user.username }} </td>
                         <td>{{ item.finish_date|date:'Y-m-d' }} </td>
-                        <td>{{ item.created_a|date:'Y-m-d H:i't }} </td>
+                        <td>{{ item.created_a|date:'Y-m-d H:i' }} </td>
                         <td>
                             {{ item.status.status }}
                         </td>
-                        <td data-order="{% if item.priority == 'urgent' %} {{1}} {%elif item.priority == 'high'%}{{2}}{%elif item.priority == 'medium'%}{{3}}{%else%}{{4}}{%endif%}">{{ item.priority }} </td>
+                        <td style="background-color: {{item.priority_color}};" data-order="{{ item.priority_order }}">{{ item.priority }} </td>
                         <td>
                             <a type="button" data-id="{% url 'user_tickets:ticket_details' item.ticket_id %}" class="viewtkt btn btn-primary"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
                             <a type="button" data-toggle="modal" data-id="{{ item.ticket_id }}" data-target="#confirmationModal" class="close_tkt btn btn-success"> <i class="fa fa-play-circle" aria-hidden="true"></i>  </a>
@@ -142,7 +142,7 @@
                         <td>
                             {{ item.status.status }}
                         </td>
-                        <td data-order="{% if item.priority == 'urgent' %} {{1}} {%elif item.priority == 'high'%}{{2}}{%elif item.priority == 'medium'%}{{3}}{%else%}{{4}}{%endif%}">{{ item.priority }} </td>
+                        <td style="background-color: {{item.priority_color}};" data-order="{{ item.priority_order }}">{{ item.priority }} </td>
                         <td>
                             <a type="button" data-id="{% url 'user_tickets:ticket_details' item.ticket_id %}" class="viewtkt btn btn-primary"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
                         </td>
@@ -167,7 +167,7 @@
                 </thead>
                 <tbody>
                     {% for item in unassigned %}
-                    <tr>
+                    <tr style="background-color: {% if item.is_past_due %}red{%endif%};">
                         <td data-order="{{ item.ticket_id }}">#{{ item.ticket_id }} </td>
                         <td>{{ item.issue_type }} </td>
                         <td>{{ item.user.username }} </td>
@@ -176,7 +176,7 @@
                         <td>
                             {{ item.status.status }}
                         </td>
-                        <td data-order="{% if item.priority == 'urgent' %} {{1}} {%elif item.priority == 'high'%}{{2}}{%elif item.priority == 'medium'%}{{3}}{%else%}{{4}}{%endif%}">{{ item.priority }} </td>
+                        <td style="background-color: {{item.priority_color}};" data-order="{{ item.priority_order }}">{{ item.priority }} </td>
                         <td>
                             <a type="button" data-id="{% url 'user_tickets:ticket_details' item.ticket_id %}" class="viewtkt btn btn-primary"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
                         </td>

@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="col-xl-4 col-sm-6 mb-4">
-      <div class="card text-white bg-warning o-hidden h-100">
+      <div class="card text-white bg-danger o-hidden h-100">
         <div class="card-body">
           <div class="card-body-icon">
             <i class="fa fa-fw fa-list"></i>
@@ -97,9 +97,20 @@
         data.addColumn('string', 'Status');
         data.addColumn('number');
         data.addRows({{ data|safe }});
-
+        var colors = [];
+        var colorMap = {
+            // should contain a map of category -> color for every category
+            'Assigned': '#ffcc00',
+            'New Tickets': '#592df7',
+            'Inprogress': '#66ff33',
+            'Cancelled': '#e63b6f',
+            "Complete": '#19c362'
+        }
+        for (var i = 0; i < data.getNumberOfRows(); i++) {
+            colors.push(colorMap[data.getValue(i, 0)]);
+        }
     var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-    chart.draw(data, {width: 400, height: 240, title: "Ticket Status"});
+    chart.draw(data, {width: 400, height: 240, title: "Ticket Status",colors: colors});
     }
 
     function linechart(){
@@ -132,7 +143,8 @@
                 vAxis: {
                     gridlines: {color: 'none'},
                     minValue: 0
-                }
+                },
+                colors: ['blue', 'green']
                 };
 
             var chart = new google.visualization.LineChart(document.getElementById('line_chart_div'));

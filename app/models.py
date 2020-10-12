@@ -8,6 +8,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from datetime import date
 
 class Status(models.Model):
     status_id = models.IntegerField(primary_key=True)
@@ -41,6 +42,32 @@ class Tickets(models.Model):
         managed = False
         db_table = 'tickets'
 
+    @property
+    def is_past_due(self):
+        return date.today() > self.finish_date
+    
+    @property
+    def priority_color(self):
+        if self.priority == 'urgent':
+            return 'green'
+        elif self.priority == 'high':
+            return 'lightgreen'
+        elif self.priority == 'medium':
+            return 'orange'
+        else:
+            return 'yellow'
+    
+    @property
+    def priority_order(self):
+        if self.priority == 'urgent':
+            return 4
+        elif self.priority == 'high':
+            return 3
+        elif self.priority == 'medium':
+            return 2
+        else:
+            return 1
+        
 class TicketStatusHistory(models.Model):
     ticket_id = models.IntegerField(blank=True, null=True)
     status = models.ForeignKey(Status,db_column='status_id',on_delete=models.DO_NOTHING, blank=True, null=True)
