@@ -56,12 +56,7 @@ def signup(request):
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
-            return HttpResponse('Please confirm your email address to complete the registration')
-            
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=user.username, password=raw_password)
-            login(request, user)
-            return redirect('/dashboard')
+            return render(request, 'confirm_email_msg.html')
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
@@ -78,10 +73,9 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return render(request, 'activation_confirmed.html')
     else:
-        return HttpResponse('Activation link is invalid!')
+        return render(request, 'invalid_link.html')
 
 # function based view used to accomodate contact_no in sign up form
 @allowed_user(allowed_roles=['admin'])
