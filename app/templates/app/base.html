@@ -22,14 +22,42 @@
     width: 40px;
     height: 40px;
     border:  solid 4px transparent;
-    border-top-color:  #00C8B1 !important;
-    border-left-color: #00C8B1 !important;
+    border-top-color:  #000000 !important;
+    border-left-color: #4f5050 !important;
     border-radius: 50%;
 }
 
 @keyframes loading-bar-spinner {
   0%   { transform: rotate(0deg);   transform: rotate(0deg); }
   100% { transform: rotate(360deg); transform: rotate(360deg); }
+}
+
+.loading-overlay {
+  display: none;
+  background: rgba(255, 255, 255, 0.7);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 9998;
+  align-items: center;
+  justify-content: center;
+}
+.loading-overlay.spinner {
+  /* display: none; */
+  background: rgba(255, 255, 255, 0.7);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 9998;
+  align-items: center;
+  justify-content: center;
+}
+.loading-overlay.is-active {
+  display: flex;
 }
 
         </style>
@@ -45,7 +73,10 @@
     </head>
 
     <body>
-        <div id="loading-bar-spinner"class="spinner"><div class="spinner-icon"></div></div>
+        
+        <div class="loading-overlay">
+            <div id="loading-bar-spinner"class="spinner"><div class="spinner-icon"></div></div>
+          </div>
         <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #e3f2fd;">
             <div class="d-flex flex-grow-1">
                 <span class="w-100 d-lg-none d-block"><!-- hidden spacer to center brand on mobile --></span>
@@ -118,7 +149,7 @@
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script>
     $(function(){
-        $('#loading-bar-spinner').hide();
+        // $('#loading-bar-spinner').hide();
     })
 </script>
         {% block dash_js %}

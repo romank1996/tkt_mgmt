@@ -179,6 +179,7 @@
                         <td style="background-color: {{item.priority_color}};" data-order="{{ item.priority_order }}">{{ item.priority }} </td>
                         <td>
                             <a type="button" data-id="{% url 'user_tickets:ticket_details' item.ticket_id %}" class="viewtkt btn btn-primary"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
+                            <a type="button" data-toggle="modal" data-id="{{ item.ticket_id }}" data-target="#confirmationModal" class="take_tkt btn btn-success"> <i class="fa fa-thumb-tack" aria-hidden="true"></i>  </a>
                         </td>
                     </tr>
                         {% endfor %}
@@ -223,11 +224,20 @@
                 confirm_url = "{% url 'engineer_app:close_ticket' %}";
                 alert_message='Ticket successfully closed.'
                 
+            } else if (button.hasClass('take_tkt')) {
+                html = '';
+                html += 'Do you want to assign the ticket to yourself?';
+                modal.find('.modal-body').html(html)
+                
+                confirm_url = "{% url 'engineer_app:take_ticket' %}";
+                alert_message='Ticket successfully Taken.'
+                
             }
            
             $('#btn_confirm').off('click').one('click', function(){
                 $('#confirmationModal').modal('hide');
-
+                let overlay = document.getElementsByClassName('loading-overlay')[0]
+                overlay.classList.toggle('is-active');  
                 if(button.hasClass('close_tkt')){
                     args = {
                         'pk': ticket_id,

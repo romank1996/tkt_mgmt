@@ -51,10 +51,10 @@
   </div>
   <div class="form-row">
     <div class="form-group  col-md-6">
-      <button type="submit" class="btn btn-success btn-block"> <i class="fa fa-save" aria-hidden="true"></i>  Assign</button>
+      <button id="btn_submit" type="submit" class="btn btn-success btn-block"> <i class="fa fa-save" aria-hidden="true"></i>  Assign</button>
     </div>
     <div class="form-group col-md-6">
-      <a type="button" href="/dashboard/tickets" class="btn btn-danger btn-block" style="color: white;"><i class="fa fa-times-circle-o" aria-hidden="true"></i>  Cancel</a>
+      <a id="btn_cancel" type="button" href="/dashboard/tickets" class="btn btn-danger btn-block" style="color: white;"><i class="fa fa-times-circle-o" aria-hidden="true"></i>  Cancel</a>
     </div>
   </div>
 </form>
@@ -63,4 +63,12 @@
 {% endblock %}
 {% block js %}
 {{ form.media }} 
+<script>
+  $(function(){
+      $('form').on('submit', function(e){
+        let overlay = document.getElementsByClassName('loading-overlay')[0]
+        overlay.classList.toggle('is-active');  
+      });
+  })
+</script>
 {% endblock %}

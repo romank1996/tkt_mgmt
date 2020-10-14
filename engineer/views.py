@@ -75,6 +75,23 @@ def engineers_list(response):
     }
     return render(response, 'engineer/engineers_list.html', args)
 
+def take_ticket(request):
+    if request.is_ajax and request.method == "GET":
+        # get the nick name from the client side.
+        pk = request.GET.get("pk", None)
+        comment = request.GET.get("comment", None)
+        ticket = Tickets.objects.filter(ticket_id=pk).first()
+        ticket.assigned_to = request.user
+        ticket.assigned_at = datetime.datetime.now()
+        ticket.status = Status.objects.get(status='Assigned')
+        ticket.is_closed = False
+        ticket.save()
+        notification.change_status(ticket,request.user,('Ticket has been successfully Assigned.' if comment == '' else comment))
+
+        return JsonResponse({'data': 'success'}, status = 200)
+
+    return JsonResponse({}, status = 400)
+
 @allowed_user(allowed_roles=['admin'])
 def change_active_status(request, pk):
     user = get_object_or_404(User, pk=pk)
