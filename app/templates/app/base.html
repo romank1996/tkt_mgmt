@@ -7,60 +7,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="{% static "app/css/main.css" %}" >
-        <style >
-            #loading-bar-spinner.spinner {
-    left: 50%;
-    margin-left: -20px;
-    top: 50%;
-    margin-top: -20px;
-    position: absolute;
-    z-index: 19 !important;
-    animation: loading-bar-spinner 400ms linear infinite;
-}
-
-#loading-bar-spinner.spinner .spinner-icon {
-    width: 40px;
-    height: 40px;
-    border:  solid 4px transparent;
-    border-top-color:  #000000 !important;
-    border-left-color: #4f5050 !important;
-    border-radius: 50%;
-}
-
-@keyframes loading-bar-spinner {
-  0%   { transform: rotate(0deg);   transform: rotate(0deg); }
-  100% { transform: rotate(360deg); transform: rotate(360deg); }
-}
-
-.loading-overlay {
-  display: none;
-  background: rgba(255, 255, 255, 0.7);
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  z-index: 9998;
-  align-items: center;
-  justify-content: center;
-}
-.loading-overlay.spinner {
-  /* display: none; */
-  background: rgba(255, 255, 255, 0.7);
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  z-index: 9998;
-  align-items: center;
-  justify-content: center;
-}
-.loading-overlay.is-active {
-  display: flex;
-}
-
-        </style>
+        <link rel="stylesheet" href="{% static "app/css/loading_spinner.css" %}" >
         {% block dash_style %}{% endblock %}
         {% block style %}{% endblock %}
         <!-- Required meta tags -->
@@ -128,9 +75,10 @@
 
         {% block dash_nav %}
         {% endblock %}
-        
-        <div class="content-container" style="margin-top: 65px;">
-
+        {% block header %}
+        {% endblock %}
+        <div class="content-container">
+            
             <div class="container-fluid">
           
               <!-- Main component for a primary marketing message or call to action -->
@@ -144,7 +92,14 @@
           
             </div>
           </div>
-
+ 
+  <!-- Footer -->
+  <footer class="py-3 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Arif Systems - Online Complaint Management</p>
+    </div>
+    <!-- /.container -->
+  </footer>
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script>
@@ -156,5 +111,6 @@
         {% endblock %}
         {% block js %}
         {% endblock %}
+
     </body>
 </html>
