@@ -1,4 +1,5 @@
 from django.urls import path, include
+from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from . import views
 
@@ -12,4 +13,5 @@ urlpatterns = [
     path('register_engineer/', views.register_user_by_admin, name='register_engineer'),
     path('updateprofile/<int:pk>', views.update_profile, name ='updateprofile'),
     path('password/', views.change_password, name='change_password'),
+    path('activate/<uidb64>/<token>/', views.activate, name='activate'),
 ]
