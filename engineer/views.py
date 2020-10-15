@@ -162,7 +162,7 @@ def find_no(queryset, date_from, date_to):
     for ticket_id in ticket_ids:
         match_val = TicketStatusHistory.objects.filter(ticket_id=ticket_id)
         match_val = match_val.order_by('-change_time')[0]
-        if date_from < match_val.change_time and match_val.change_time <= date_to:
+        if date_from <= match_val.change_time and match_val.change_time <= date_to:
             count = count + 1
     return count
 
@@ -173,6 +173,6 @@ def find_overdue_no(queryset, date_from, date_to):
         match_val = TicketStatusHistory.objects.filter(ticket_id=ticket_id)
         match_val = match_val.order_by('-change_time')[0]
         finish_date = Tickets.objects.get(pk=ticket_id).finish_date
-        if date_from < match_val.change_time and match_val.change_time <= date_to and finish_date < datetime.date.today():
+        if date_from <= match_val.change_time and match_val.change_time <= date_to and finish_date < datetime.date.today():
             count = count + 1
     return count
