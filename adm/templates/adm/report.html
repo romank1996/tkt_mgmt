@@ -1,0 +1,22 @@
+{% extends base_template_name %}
+{% load static %}
+{% block title %}Tickets{% endblock %}
+{% block style %}
+<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+{% endblock %}
+
+{% block content%}
+<div id="chart_div"></div>
+{% endblock %}
+
+
+{% block js %}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    $(document).ready(function() {
+        
+
+    } );
+</script>
+{% endblock %}

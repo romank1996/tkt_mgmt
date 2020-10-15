@@ -113,7 +113,7 @@
                                 <div class="card-header" id="faqHeading-1">
                                     <div class="mb-0">
                                         <h5 class="faq-title" data-toggle="collapse" data-target="#faqCollapse-{{item.id}}" data-aria-expanded="true" data-aria-controls="faqCollapse-{{item.id}}">
-                                            <span class="badge">{{item.id}}</span>{{item.question}}
+                                            <span class="badge">{{ forloop.counter }}</span>{{item.question}}
                                         </h5>
                                     </div>
                                 </div>
@@ -121,6 +121,11 @@
                                     <div class="card-body">
                                         <p>{{item.answer}}</p>
                                     </div>
+                                    {% if  user.groups.all.0.name == "admin"  %}                                        <div>
+                                            <a type="button" href="{% url 'edit_faq' pk=item.id %}" class="btn btn-success btn-block" style="color: white;"><i class="fa fa-plus" aria-hidden="true"></i>  Edit Faq</a>
+                                            <a type="button" href="{% url 'faq_remove' pk=item.id %}" class="btn btn-success btn-block" style="color: white;"><i class="fa fa-plus" aria-hidden="true"></i>  Remove Faq</a>
+                                        </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         {% endfor %}

@@ -7,6 +7,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="{% static "app/css/main.css" %}" >
+        <link rel="stylesheet" href="{% static "app/css/loading_spinner.css" %}" >
         {% block dash_style %}{% endblock %}
         {% block style %}{% endblock %}
         <!-- Required meta tags -->
@@ -19,6 +20,10 @@
     </head>
 
     <body>
+        
+        <div class="loading-overlay">
+            <div id="loading-bar-spinner"class="spinner"><div class="spinner-icon"></div></div>
+          </div>
         <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #e3f2fd;">
             <div class="d-flex flex-grow-1">
                 <span class="w-100 d-lg-none d-block"><!-- hidden spacer to center brand on mobile --></span>
@@ -70,9 +75,10 @@
 
         {% block dash_nav %}
         {% endblock %}
-        
-        <div class="content-container" style="margin-top: 65px;">
-
+        {% block header %}
+        {% endblock %}
+        <div class="content-container">
+            
             <div class="container-fluid">
           
               <!-- Main component for a primary marketing message or call to action -->
@@ -86,13 +92,25 @@
           
             </div>
           </div>
-
+ 
+  <!-- Footer -->
+  <footer class="py-3 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Arif Systems - Online Complaint Management</p>
+    </div>
+    <!-- /.container -->
+  </footer>
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-
+<script>
+    $(function(){
+        // $('#loading-bar-spinner').hide();
+    })
+</script>
         {% block dash_js %}
         {% endblock %}
         {% block js %}
         {% endblock %}
+
     </body>
 </html>

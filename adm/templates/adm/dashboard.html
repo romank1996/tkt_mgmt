@@ -6,24 +6,163 @@
 
 
 {% block content %}
-<div id="chart_div">
+<div class="container">
+<div class="row">
+    <div class="col-xl-4 col-sm-6 mb-4 ">
+      <div class="card text-white bg-primary o-hidden h-100">
+        <div class="card-body">
+          <div class="card-body-icon">
+            <i class="fa fa-fw fa-plus"></i>
+          </div>
+          <div class="mr-5">{{new}} New Tickets!</div>
+        </div>
+        <a class="card-footer text-white clearfix small z-1" href="{% url 'admin_app:admin_tickets' %}">
+          <span class="float-left">View Details</span>
+          <span class="float-right">
+            <i class="fa fa-angle-right"></i>
+          </span>
+        </a>
+      </div>
+    </div>
+    <div class="col-xl-4 col-sm-6 mb-4">
+      <div class="card text-white bg-danger o-hidden h-100">
+        <div class="card-body">
+          <div class="card-body-icon">
+            <i class="fa fa-fw fa-list"></i>
+          </div>
+          <div class="mr-5">{{overdue}} Overdue Tickets</div>
+        </div>
+        <a class="card-footer text-white clearfix small z-1" href="{% url 'admin_app:admin_tickets' %}">
+          <span class="float-left">View Details</span>
+          <span class="float-right">
+            <i class="fa fa-angle-right"></i>
+          </span>
+        </a>
+      </div>
+    </div>
+    <div class="col-xl-4 col-sm-6 mb-4">
+      <div class="card text-white bg-success o-hidden h-100">
+        <div class="card-body">
+          <div class="card-body-icon">
+            <i class="fa fa-fw fa-check"></i>
+          </div>
+          <div class="mr-5">{{complete}} Completed Tickets!</div>
+        </div>
+        <a class="card-footer text-white clearfix small z-1" href="{% url 'admin_app:admin_tickets' %}">
+          <span class="float-left">View Details</span>
+          <span class="float-right">
+            <i class="fa fa-angle-right"></i>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+<div class="row" style="margin-top: 10px;">
+    <div class="col col-md-6" id="">
+        <h5>Notifications</h5>
+        <table class="table">
+            <thead class="thead-dark">
+                <th>Title</th>
+                <th>Message</th>
+            </thead>
+            <tbody id='notification'></tbody>
+        </table>
+    </div>
+  <div class="col col-md-4" id="chart_div">
+  </div>
+  
+
 </div>
+<div class="row" style="margin-top: 5px;">
+    <div class="col col-md-12" id="line_chart_div">
+    </div>
+</div>
+</div>
+
 {% endblock %}
 {% block js %}
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
+    $(document).ready(function() {
+        htmls = '<td colspan="2">There is no new notifications</td>';
+
+        $('#notification').html(htmls);
+        linechart();
+        } );
     google.load('visualization', '1.0', {'packages':['corechart']});
     google.setOnLoadCallback(drawChart);
     function drawChart() {
-        var datas ='{{data|safe}}';
-        debugger
+   
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Status');
         data.addColumn('number');
         data.addRows({{ data|safe }});
+        var colors = [];
+        var colorMap = {
+            // should contain a map of category -> color for every category
+            'Assigned': '#ffcc00',
+            'New Tickets': '#592df7',
+            'Inprogress': '#66ff33',
+            'Cancelled': '#e63b6f',
+            "Complete": '#19c362'
+        }
+        for (var i = 0; i < data.getNumberOfRows(); i++) {
+            colors.push(colorMap[data.getValue(i, 0)]);
+        }
+    var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+    chart.draw(data, {width: 400, height: 240, title: "Ticket Status",colors: colors});
+    }
 
-    var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
-    chart.draw(data, {width: 400, height: 240, title: "Ticket Status"});
+    function linechart(){
+        google.charts.load('current', {packages: ['corechart', 'corechart']});
+        google.charts.setOnLoadCallback(drawLogScales);
+
+        function drawLogScales() {
+            var data = new google.visualization.DataTable();
+                var datas ={{line_data|safe}};
+            data.addColumn('date', 'Date');
+            data.addColumn('number', 'Created');
+            data.addColumn('number', 'Completed');
+            debugger
+            //   data.addColumn('number', 'Cats');
+            datas.forEach(element => {
+                d = element[0];
+                if(d!= null){
+                    data.addRow([new Date(d),element[1], element[2]])
+                }
+            });
+
+            var options = {
+                title: 'Status of Tickets on daily basis',
+                width: 900,
+                height: 500,
+                hAxis: {
+                    format: 'M/d/yy',
+                    gridlines: {count: 15}
+                },
+                vAxis: {
+                    gridlines: {color: 'none'},
+                    minValue: 0
+                },
+                colors: ['blue', 'green']
+                };
+
+            var chart = new google.visualization.LineChart(document.getElementById('line_chart_div'));
+            var results = google.visualization.data.group(data, [0], [{'column': 1, 'aggregation': google.visualization.data.sum, 'type': 'number'},{'column': 2, 'aggregation': google.visualization.data.sum, 'type': 'number'}])
+            chart.draw(results, options);
+            var button = document.getElementById('change');
+
+                button.onclick = function () {
+
+                // If the format option matches, change it to the new option,
+                // if not, reset it to the original format.
+                options.hAxis.format === 'M/d/yy' ?
+                options.hAxis.format = 'MMM dd, yyyy' :
+                options.hAxis.format = 'M/d/yy';
+
+                chart.draw(data, options);
+                };
+            }
     }
     </script>
 {% endblock %}

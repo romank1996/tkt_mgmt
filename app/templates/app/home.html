@@ -1,7 +1,87 @@
 {% extends 'app/base.html' %}
-
+{% load static %}
 {% block title %}Home - Arif Systems{% endblock %}
-
+{% block style %}
+<style>
+    .content-container {
+        margin-top: 0px;
+    }
+</style>
+{% endblock %}
+{% block header %}
+  <!-- Header -->
+  <header class="bg-light py-5">
+    <div class="container h-100">
+      <div class="row h-100 align-items-center">
+        <div class="col-lg-12" style="text-align: center;">
+        
+            <img src="{% static "app/images/logo.png" %}"/>
+          <h1 class="display-4 text-dark mt-5 mb-2">Arif Systems - Online Complaint Management</h1>
+          <p class="lead mb-5 text-dark">Manage All your Tickets Online.</p>
+          <a class="btn btn-success btn-lg center" href="{% url 'accounts:signup' %}">Get Started &raquo;</a>
+        </div>
+      </div>
+    </div>
+  </header>
+{% endblock %}
 {% block content %}
-<h1>Arif Systems</h1>
+
+
+
+    <div class="row">
+      <div class="col-md-8">
+        <h2>Features</h2>
+        <hr>
+        <div class="row">
+            <div class="col-md-4">
+              <div class="card h-100">
+                <img class="card-img-top" src="{% static 'app/images/ticket_mgmt.jpg' %}" alt="">
+                <div class="card-body">
+                  <h4 class="card-title">Manage Tickets</h4>
+                  <p class="card-text">Create Tickets and View Status, all in one place.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card h-100">
+                <img class="card-img-top" src="{% static 'app/images/notification.png' %}"  alt="">
+                <div class="card-body">
+                  <h4 class="card-title">Notifications</h4>
+                  <p class="card-text">Get Notified on any changes in Ticket Status.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card h-100">
+                <img class="card-img-top" src="{% static 'app/images/chat.png' %}" alt="">
+                <div class="card-body">
+                  <h4 class="card-title">Contact Engineers</h4>
+                  <p class="card-text">Contact Engineers about Tickets or Report Issues.</p>
+                </div>
+              </div>
+            </div>
+          </div>        
+      </div>
+      <div class="col-md-4">
+        <h2>Contact Us</h2>
+        <hr>
+        <address>
+          <strong>Arif Systems</strong>
+          <br>
+        </address>
+        <address>
+          <abbr title="Phone">P:</abbr>
+          (123) 456-7890
+          <br>
+          <abbr title="Email">E:</abbr>
+          <a href="mailto:#">info@arifsystems.org</a>
+        </address>
+      </div>
+    </div>
+    <!-- /.row -->
+
+   
+    <!-- /.row -->
+
+
 {% endblock %}

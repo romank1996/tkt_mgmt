@@ -27,15 +27,6 @@ REFERENCES status(id)
 
 );
 
-create table ticket_assign_history(
-    id serial PRIMARY KEY,
-    ticket_id integer,
-    assigned_to integer,
-    assigned_time timestamp,
-    assigned_by integer
-);
-
-
 create table ticket_status_history(
     id serial PRIMARY KEY,
     ticket_id integer,
@@ -52,3 +43,7 @@ create table faqs(
     is_deleted boolean,
     sort_order integer
 );
+
+INSERT into auth_group(name) VALUES('engineer');
+INSERT into auth_group(name) VALUES('admin');
+INSERT into auth_group(name) VALUES('user');

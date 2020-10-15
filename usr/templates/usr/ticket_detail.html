@@ -6,10 +6,50 @@
   </button>
 </div>
 <div class="modal-body">
-  <div>Issue:{{tickets.issue_type}}</div>
-  <div>Description:{{tickets.description}}</div>
-  <div>Description:{{tickets.ticket_status_history}}</div>
-</div>
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        Issue Type: {{tickets.issue_type}}
+      </div>
+      <div class="col-6">
+        Created By: {{tickets.user.username}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        Priority: {{tickets.priority}}
+      </div>
+      <div class="col-6">
+        Phone: {{tickets.user.profile.contact_no}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        Due Date: {{tickets.finish_date}}
+      </div>
+      <div class="col-6">
+        Email: {{tickets.user.profile.email}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">Description: {{tickets.description}}</div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        Status History
+        <table>
+          <thead>
+            <th>#</th>
+            <th>Date</th>
+            <th>Comment</th>
+          </thead>
+          <tbody id='status_body'>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 </div>
@@ -24,7 +64,33 @@
           },
           dataType: 'json',
           success: function (data) {
-            debugger
+            datas = JSON.parse(data)
+            $('#status_body').html('');
+            htmls = '';
+            var counter = 1;
+            debugger;
+            $.each(datas,function(index,item){
+              htmls+='<tr><td>'+counter+'</td>';
+              date = new Date(item.fields.change_time)
+              htmls+='<td>'+date.toDateString()+'</td>';
+              switch(item.fields.status){
+                case 1:
+                  htmls+='<td>Ticket Assigned</td>';
+                  break;
+                case 2:
+                  htmls+='<td>Started working on Ticket</td>';
+                  break;
+                case 3:
+                  htmls+='<td>Ticket Solved</td>';
+                  break;
+                case 5:
+                  htmls+='<td>Ticket Cancelled By User</td>';
+                  break;
+              }
+              htmls+='</tr>';
+              counter++;
+            });
+            $('#status_body').html(htmls);
           }
       });
     });

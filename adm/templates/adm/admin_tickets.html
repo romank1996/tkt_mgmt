@@ -54,12 +54,12 @@
                 </thead>
                 <tbody>
                     {% for item in new_tickets %}
-                    <tr>
-                        <td>#{{ item.ticket_id }} </td>
+                    <tr style="background-color: {% if item.is_past_due %}red{%endif%};">
+                        <td data-order="{{ item.ticket_id }}">#{{ item.ticket_id }} </td>
                         <td>{{ item.issue_type }} </td>
                         <td>{{ item.user.username }} </td>
-                        <td>{{ item.finish_date }} </td>
-                        <td>{{ item.created_at }} </td>
+                        <td>{{ item.finish_date|date:'Y-m-d' }} </td>
+                        <td>{{ item.created_at|date:'Y-m-d H:i' }} </td>
                         <td>
                             {% if item.status %}
                                 {{ item.status.status }}
@@ -67,7 +67,7 @@
                                 Pending
                             {% endif %}
                         </td>
-                        <td>{{ item.priority }} </td>
+                        <td style="background-color: {{item.priority_color}};" data-order="{{ item.priority_order }}">{{ item.priority }} </td>
                         <td>
                             <a type="button"  href="{% url 'admin_app:assign_tickets' item.ticket_id %}" class="btn btn-success"> <i class="fa fa-user-plus" aria-hidden="true"></i> </a>
                             <a type="button" data-id="{% url 'user_tickets:ticket_details' item.ticket_id %}" class="viewtkt btn btn-primary"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
@@ -93,16 +93,16 @@
                 </thead>
                 <tbody>
                     {% for item in assigned %}
-                    <tr>
-                        <td>#{{ item.ticket_id }} </td>
+                    <tr style="background-color: {% if item.is_past_due %}red{%endif%};">
+                        <td data-order="{{ item.ticket_id }}">#{{ item.ticket_id }} </td>
                         <td>{{ item.issue_type }} </td>
                         <td>{{ item.user.username }} </td>
-                        <td>{{ item.finish_date }} </td>
-                        <td>{{ item.created_at }} </td>
+                        <td>{{ item.finish_date|date:'Y-m-d' }} </td>
+                        <td>{{ item.created_at|date:'Y-m-d H:i' }} </td>
                         <td>
                             {{ item.assigned_to }}
                         </td>
-                        <td>{{ item.priority }} </td>
+                        <td style="background-color: {{item.priority_color}};" data-order="{{ item.priority_order }}">{{ item.priority }} </td>
                         <td>
                             <a type="button" data-id="{% url 'user_tickets:ticket_details' item.ticket_id %}" class="viewtkt btn btn-primary"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
                         </td>
@@ -127,16 +127,16 @@
                 </thead>
                 <tbody>
                     {% for item in working_on %}
-                    <tr>
-                        <td>#{{ item.ticket_id }} </td>
+                    <tr style="background-color: {% if item.is_past_due %}red{%endif%};">
+                        <td data-order="{{ item.ticket_id }}">#{{ item.ticket_id }} </td>
                         <td>{{ item.issue_type }} </td>
                         <td>{{ item.user.username }} </td>
-                        <td>{{ item.finish_date }} </td>
-                        <td>{{ item.created_at }} </td>
+                        <td>{{ item.finish_date|date:'Y-m-d' }} </td>
+                        <td>{{ item.created_at|date:'Y-m-d H:i' }} </td>
                         <td>
                             {{ item.assigned_to }}
                         </td>
-                        <td>{{ item.priority }} </td>
+                        <td style="background-color: {{item.priority_color}};" data-order="{{ item.priority_order }}">{{ item.priority }} </td>
                         <td>
                             <a type="button" data-id="{% url 'user_tickets:ticket_details' item.ticket_id %}" class="viewtkt btn btn-primary"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
                         </td>
@@ -162,15 +162,15 @@
                 <tbody>
                     {% for item in complete %}
                     <tr>
-                        <td>#{{ item.ticket_id }} </td>
+                        <td data-order="{{ item.ticket_id }}">#{{ item.ticket_id }} </td>
                         <td>{{ item.issue_type }} </td>
                         <td>{{ item.user.username }} </td>
-                        <td>{{ item.finish_date }} </td>
-                        <td>{{ item.created_at }} </td>
+                        <td>{{ item.finish_date|date:'Y-m-d' }} </td>
+                        <td>{{ item.created_at|date:'Y-m-d H:i' }} </td>
                         <td>
                             {{ item.assigned_to }}
                         </td>
-                        <td>{{ item.priority }} </td>
+                        <td style="background-color: {{item.priority_color}};" data-order="{{ item.priority_order }}">{{ item.priority }} </td>
                         <td>
                             <a type="button" data-id="{% url 'user_tickets:ticket_details' item.ticket_id %}" class="viewtkt btn btn-primary"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
                         </td>
