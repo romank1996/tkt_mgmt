@@ -50,7 +50,7 @@ def base_template(request):
 class CreateFaq(LoginRequiredMixin, CreateView):
     login_url = '/accounts/login/'
     model = Faqs
-    fields = ('question', 'answer', 'created_at')
+    fields = ('question', 'answer')
 
 
 class DetailFaq(DetailView):

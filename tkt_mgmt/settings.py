@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'tkt_mgmt.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tkt_mgmt',
+        'NAME': 'tkt_mgmt1',
         'USER': 'postgres',
         'PASSWORD': 'khwaunju',
         'HOST': '127.0.0.1',

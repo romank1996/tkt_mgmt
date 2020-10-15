@@ -15,7 +15,7 @@ class Status(models.Model):
     status = models.CharField(max_length=15, blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'status'
 
 
@@ -39,7 +39,7 @@ class Tickets(models.Model):
     is_closed = models.BooleanField(null=True,default=False,blank=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'tickets'
 
     @property
@@ -93,3 +93,15 @@ class Faqs(models.Model):
 
     def get_absolute_url(self):
         return reverse("faq")
+
+class Conversation(models.Model):
+    ticket = models.ForeignKey(Tickets, on_delete=models.DO_NOTHING, blank=True, null=True)
+    title = models.CharField(max_length=15, blank=False, null=False)
+    created = models.DateTimeField(blank=False,null=False)
+    is_closed = models.BooleanField(blank=False, null=False, default=False)
+
+class Message(models.Model):
+    conversation = models.ForeignKey(Conversation, on_delete=models.DO_NOTHING, blank=False, null=False)
+    sender = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True, related_name='sender')
+    message = models.CharField(max_length=255, blank=False,null=False)
+    date_time = models.DateTimeField(blank=False,null=False)
