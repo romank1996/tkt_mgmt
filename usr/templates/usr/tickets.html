@@ -8,7 +8,7 @@
 {% endblock %}
 {% block content%}
 {% include "app/_modal.html" %}
-
+{% include "app/chat.html" %}
 <div class="container">
     <div class="row">
           <div class="col col-md-4">
@@ -65,6 +65,7 @@
                         <td>{{ item.assigned_to.username }} </td>
                         <td>
                             <a type="button" data-id="{% url 'user_tickets:ticket_details' item.ticket_id %}" class="viewtkt btn btn-primary"> <i class="fa fa-eye" aria-hidden="true"></i>  </a>
+                            <a type="button" data-toggle="modal" data-id="{{ item.ticket_id }}" data-target="#chatModal" class="chat btn btn-success"> <i class="fa fa-comments" aria-hidden="true"></i>  </a>
                         </td>
                     </tr>
                         {% endfor %}
@@ -120,6 +121,7 @@
 {% block js %}
 
 <script src="{% static 'js/jquery.bootstrap.modal.forms.min.js' %}"></script>
+<script src="{% static 'js/chat.js' %}"></script>
 <script>
     $(document).ready(function() {
         $('.tkt_tbl').DataTable();

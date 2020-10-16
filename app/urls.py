@@ -12,4 +12,6 @@ urlpatterns = [
     path('detail_faq/<int:pk>', views.DetailFaq.as_view(), name='detail_faq'),
     path('edit_faq/<int:pk>', views.UpdateFaq.as_view(), name='edit_faq'),
     path('faq/<int:pk>/remove', views.DeleteFaq.as_view(), name='faq_remove'),
+    path('chat/', views.get_chat_data, name='get_chat_data'),
+    path('send_message/', views.send_message, name='send_message'),
 ]

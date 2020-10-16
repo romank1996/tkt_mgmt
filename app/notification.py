@@ -1,4 +1,4 @@
-from app.models import TicketStatusHistory
+from app.models import TicketStatusHistory,Conversation,Message,Tickets
 import datetime
 from django.core import mail
 from app.models import Status
@@ -59,3 +59,24 @@ def send_nodification(subject,message,to_emails):
         to_emails,
         fail_silently=True,
     )
+
+def save_conversation(tkt_id):
+    data = Conversation.objects.filter(ticket=tkt_id).first()
+    if not data:
+        con = Conversation()
+        con.ticket = (0 if tkt_id == 0 else Tickets.objects.filter(ticket_id=tkt_id).first())
+        con.title = 'Ticket #' + str(tkt_id)
+        con.created = datetime.datetime.now()
+        con.save()
+        return con
+
+    return data
+
+def save_message(conv, sender, message):
+    mess = Message()
+    mess.conversation = conv
+    mess.sender = sender
+    mess.message = message
+    mess.date_time = datetime.datetime.now()
+    mess.save()
+
