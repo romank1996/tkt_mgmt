@@ -105,3 +105,7 @@ class Message(models.Model):
     sender = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True, related_name='sender')
     message = models.CharField(max_length=255, blank=False,null=False)
     date_time = models.DateTimeField(blank=False,null=False)
+
+    @property
+    def sender_name(self):
+        return self.sender.username
